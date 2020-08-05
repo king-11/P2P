@@ -1,0 +1,30 @@
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+}
+
+.page-enter-active,
+.page-leave-active {
+  -webkit-transition: all 0.8s ease-in;
+  transition: all 0.8s ease-in;
+}
+
+.page-enter {
+  -webkit-transform: translateY(-100%) scaleX(0) translateZ(0);
+  transform: translateY(-100%) scaleX(0) translateZ(0);
+  -webkit-transform-origin: left;
+  transform-origin: left;
+  opacity: 0;
+}
+
+.page-leave-to {
+  -webkit-transform: translateY(100%);
+  transform: translateY(100%);
+  opacity: 0;
+}
