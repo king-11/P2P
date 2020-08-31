@@ -1,14 +1,14 @@
 <template>
   <v-container fluid>
-    <v-toolbar max-width="800" class="mx-auto">
+    <v-toolbar class="mx-xs-0 mx-sm-4 mx-md-10 mx-lg-14 mx-xl-16 rounded-lg">
       <v-toolbar-title>
-        <h2>Your courses</h2>
+        <strong>Your Courses</strong>
       </v-toolbar-title>
       <v-spacer />
       <v-tooltip bottom>
         <template v-slot:activator="{ on, attrs }">
-          <v-btn class="white black--text" v-bind="attrs" v-on="on">
-            Create Course
+          <v-btn class="white black--text" v-bind="attrs" fab x-small v-on="on">
+            <v-icon>mdi-plus</v-icon>
           </v-btn>
         </template>
         <span>Add a new course</span>
