@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <v-toolbar app>
+  <v-container fluid>
+    <v-toolbar max-width="800" class="mx-auto">
       <v-toolbar-title>
         <h2>Your courses</h2>
       </v-toolbar-title>
@@ -79,7 +79,7 @@
         </v-col>
       </v-row>
     </v-container>
-  </div>
+  </v-container>
 </template>
 
 <script>

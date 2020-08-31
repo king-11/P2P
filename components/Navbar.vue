@@ -1,18 +1,6 @@
 <template>
   <nav>
-    <v-app-bar light elevate-on-scroll>
-      <v-app-bar-nav-icon x-large class="black--text text--darken-5" @click="navbar = !navbar" />
-      <v-toolbar-title class="text-uppercase">
-        <div style="display:inline-block;transform: rotateY(180deg)">
-          P
-        </div>2P
-      </v-toolbar-title>
-      <v-spacer />
-      <v-btn outlined class="black white--text">
-        Sign Out
-      </v-btn>
-    </v-app-bar>
-    <v-navigation-drawer v-model="navbar" app light>
+    <v-navigation-drawer v-model="navbar" light fixed app>
       <!-- user details section -->
       <v-list three-line>
         <v-list-item>
@@ -51,6 +39,18 @@
       </v-list>
       <v-spacer />
     </v-navigation-drawer>
+    <v-app-bar light elevate-on-scroll app>
+      <v-app-bar-nav-icon x-large class="black--text text--darken-5" @click="navbar = !navbar" />
+      <v-toolbar-title class="text-uppercase">
+        <div style="display:inline-block;transform: rotateY(180deg)">
+          P
+        </div>2P
+      </v-toolbar-title>
+      <v-spacer />
+      <v-btn outlined class="black white--text">
+        Sign Out
+      </v-btn>
+    </v-app-bar>
   </nav>
 </template>
 
