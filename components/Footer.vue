@@ -1,5 +1,5 @@
 <template>
-  <v-footer absolute light padless>
+  <v-footer light padless>
     <v-row>
       <v-col class="text-center  grey--text">
         &copy; {{ new Date().getFullYear() }} — <strong>Knightmode</strong>
