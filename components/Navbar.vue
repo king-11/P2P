@@ -47,7 +47,7 @@
         </div>2P
       </v-toolbar-title>
       <v-spacer />
-      <v-btn outlined class="black white--text">
+      <v-btn outlined class="black white--text" to="/">
         Sign Out
       </v-btn>
     </v-app-bar>
@@ -67,7 +67,7 @@ export default {
       },
       navbar: false,
       links: [
-        { title: 'Dashboard', icon: 'mdi-view-dashboard', route: '/' },
+        { title: 'Dashboard', icon: 'mdi-view-dashboard', route: '/instructor' },
         { title: 'Profile', icon: 'mdi-account-group', route: '/profile' },
         { title: 'Assignments', icon: 'mdi-equal-box', route: '/assignments' }
       ]
