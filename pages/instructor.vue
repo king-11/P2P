@@ -15,15 +15,14 @@
       </v-tooltip>
     </v-toolbar>
     <v-container>
-      <v-row>
-        <v-col
+      <transition-group
+        name="course-list"
+        class="d-flex flex-wrap justify-space-around"
+      >
+        <div
           v-for="course in courses"
           :key="course.id"
-          xs12
-          sm6
-          md4
-          lg4
-          mx-5
+          class="course-list my-4 mx-3"
         >
           <v-card class="mx-auto" max-width="344" elevation="20" ripple rounded>
             <v-tooltip bottom>
@@ -61,7 +60,11 @@
               <v-spacer />
 
               <v-btn icon @click="view(course)">
-                <v-icon>{{ course.show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
+                <v-icon>
+                  {{
+                    course.show ? "mdi-chevron-up" : "mdi-chevron-down"
+                  }}
+                </v-icon>
               </v-btn>
             </v-card-actions>
 
@@ -76,8 +79,8 @@
               </div>
             </v-expand-transition>
           </v-card>
-        </v-col>
-      </v-row>
+        </div>
+      </transition-group>
     </v-container>
   </v-container>
 </template>
@@ -164,5 +167,29 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
+.course-list {
+  backface-visibility: hidden;
+
+  transition: all 1s;
+  &-move {
+    transition: all 600ms ease-in-out 50ms;
+  }
+  &-enter-active {
+    transition: all 300ms ease-out;
+  }
+
+  &-leave-active {
+    transition: all 200ms ease-in;
+    position: absolute;
+    z-index: 0;
+  }
+  &-enter,
+  &-leave-to {
+    opacity: 0;
+  }
+  &-enter {
+    transform: scale(0.9);
+  }
+}
 </style>
