@@ -68,7 +68,7 @@ export default {
       navbar: false,
       links: [
         { title: 'Dashboard', icon: 'mdi-view-dashboard', route: '/instructor' },
-        { title: 'Profile', icon: 'mdi-account-group', route: '/profile' },
+        { title: 'Profile', icon: 'mdi-account', route: '/profile' },
         { title: 'Assignments', icon: 'mdi-equal-box', route: '/assignments' }
       ]
     }
