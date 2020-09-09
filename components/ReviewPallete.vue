@@ -116,10 +116,9 @@ export default {
         }
       }
     },
-    // because user may enter a NaN and that would produse unwanted vue-warn in console.
-    // eslint-disable-next-line vue/require-prop-types
     taskWeightage: {
-      default: 0
+      default: 0,
+      type: [Number, String, Object]
     },
     index: {
       type: Number,

@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 <template>
   <div>
     <v-layout child-flex>
@@ -255,13 +254,9 @@ export default {
             sum += parseInt(this.task.reviewAreas[i].points)
           } catch (err) {
             this.message = err.message
-            // eslint-disable-next-line no-console
-            console.log('2.', 'message = ', this.message)
             this.showSnackbar = true // show Server error page for this.
           }
         }
-        // eslint-disable-next-line no-console
-        console.log('sum =', sum)
         if (sum !== taskWeightage) {
           this.displaySnackbar(
             'Total of points and task weightage should match',

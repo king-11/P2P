@@ -13,7 +13,7 @@
       <v-text-field
         v-model="date"
         color="primary"
-        label="Submission deadline"
+        :label="label"
         hint="YYYY-MM-DD format"
         persistent-hint
         readonly
@@ -35,6 +35,12 @@
 <script>
 export default {
   name: 'DateInput',
+  props: {
+    label: {
+      type: String,
+      required: true
+    }
+  },
   data () {
     return {
       showMenu: false,

@@ -1,8 +1,6 @@
-/* eslint-disable no-console */ /* eslint-disable
-vue/no-side-effects-in-computed-properties */
 <template>
-  <v-main>
-    <v-row row wrap justify="center" align="center" class="mt-n5">
+  <v-container>
+    <v-row row wrap justify="center" align="center" class="mt-3">
       <v-col cols="12" md="10" xl="8">
         <v-card elevation="2">
           <v-card-title class="info--text">
@@ -30,10 +28,16 @@ vue/no-side-effects-in-computed-properties */
               />
               <v-row>
                 <v-col sm="6">
-                  <date-input @update:date="(updatedDate) => {submissionDeadline = updatedDate}" />
+                  <date-input
+                    label="Submission deadline"
+                    @update:date="(updatedDate) => {submissionDeadline = updatedDate}"
+                  />
                 </v-col>
                 <v-col sm="6">
-                  <date-input @update:date="(updatedDate) => {reviewDeadline = updatedDate}" />
+                  <date-input
+                    label="Review deadline"
+                    @update:date="(updatedDate) => {reviewDeadline = updatedDate}"
+                  />
                 </v-col>
               </v-row>
             </v-form>
@@ -157,7 +161,7 @@ vue/no-side-effects-in-computed-properties */
         </template>
       </v-snackbar>
     </v-row>
-  </v-main>
+  </v-container>
 </template>
 <script>
 import AddTask from '@/components/AddTask'
@@ -216,9 +220,7 @@ export default {
       this.tasks.forEach((element) => {
         sum += parseInt(element.weightage)
       })
-      // done intentionally will fix during api integration.
-      // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-      this.totalPoints = sum
+      this.updateTotalPoints(sum)
       return this.totalPoints
     },
     getTaskbuff () {
@@ -242,6 +244,9 @@ export default {
     }
   },
   methods: {
+    updateTotalPoints (newTotal) {
+      this.totalPoints = newTotal
+    },
     displaySnackbar (message, color) {
       this.snackbarMessage = message
       this.snackbarColor = color || 'error'
@@ -250,12 +255,10 @@ export default {
     saveAssignment () {
       if (this.title.length <= 0) {
         this.displaySnackbar('Title is required!', 'error')
-        // eslint-disable-next-line no-useless-return
         return
       }
       if (this.submissionDeadline >= this.reviewDeadline) {
         this.displaySnackbar('Review period to short or negative!', 'error')
-        // eslint-disable-next-line no-useless-return
         return
       }
       this.displaySnackbar('Ready to save!', 'success')
