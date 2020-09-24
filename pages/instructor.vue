@@ -87,6 +87,7 @@
 
 <script>
 export default {
+  middleware: ['auth'],
   data () {
     return {
       // headeres for  assignments table

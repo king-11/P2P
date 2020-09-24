@@ -1,11 +1,11 @@
 <template>
   <nav>
-    <v-navigation-drawer v-model="navbar" light fixed app>
+    <v-navigation-drawer v-if="isSignIn" v-model="navbar" light fixed app>
       <!-- user details section -->
       <v-list three-line>
         <v-list-item>
           <v-list-item-avatar>
-            <v-img v-if="user.imgsrc" src="user.imgsrc" />
+            <v-img v-if="imgsrc !== 'null'" :src="imgsrc" />
             <v-avatar v-else color="black">
               <v-icon dark size="40">
                 mdi-account-circle
@@ -14,13 +14,13 @@
           </v-list-item-avatar>
           <v-list-item-content>
             <v-list-item-title>
-              {{ user.Name }}
+              {{ user.first_name }}
             </v-list-item-title>
             <v-list-item-subtitle class="black--text">
               <span class="grey--text text--darken-3">
-                {{ user.Email }}
+                {{ user.email }}
               </span> &mdash;
-              {{ user.Institution }}
+              {{ user.institution }}
             </v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
@@ -40,14 +40,14 @@
       <v-spacer />
     </v-navigation-drawer>
     <v-app-bar light elevate-on-scroll app>
-      <v-app-bar-nav-icon x-large class="black--text text--darken-5" @click="navbar = !navbar" />
-      <v-toolbar-title class="text-uppercase">
+      <v-app-bar-nav-icon v-if="isSignIn" x-large class="black--text text--darken-5" @click="navbar = !navbar" />
+      <v-toolbar-title class="text-uppercase" to="/">
         <div style="display:inline-block;transform: rotateY(180deg)">
           P
         </div>2P
       </v-toolbar-title>
       <v-spacer />
-      <v-btn outlined class="black white--text" to="/">
+      <v-btn v-if="isSignIn" outlined class="black white--text" to="/" @click="SignOut">
         Sign Out
       </v-btn>
     </v-app-bar>
@@ -58,19 +58,34 @@
 export default {
   data () {
     return {
-      user: {
-        Name: 'S K Singh',
-        Email: 'skscse@itbhu.ac.in',
-        Instructor: true,
-        Institution: 'IIT (BHU) Varanasi',
-        imgsrc: null
-      },
       navbar: false,
+      imgsrc: null,
       links: [
         { title: 'Dashboard', icon: 'mdi-view-dashboard', route: '/instructor' },
         { title: 'Profile', icon: 'mdi-account', route: '/profile' },
         { title: 'Assignments', icon: 'mdi-equal-box', route: '/assignments' }
       ]
+    }
+  },
+  computed: {
+
+    isSignIn () {
+      return this.$store.state.auth.loggedIn
+    },
+    user () {
+      if (this.$store.state.auth.loggedIn) {
+        return this.$auth.user.data
+      } else {
+        return null
+      }
+    }
+  },
+  mounted () {
+    this.imgsrc = localStorage.getItem('photoUrl')
+  },
+  methods: {
+    async SignOut () {
+      await this.$auth.logout()
     }
   }
 }

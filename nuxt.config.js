@@ -34,6 +34,7 @@ export default {
   ** https://nuxtjs.org/guide/plugins
   */
   plugins: [
+    '~/plugins/firebase.js'
   ],
   /*
   ** Auto import components
@@ -60,10 +61,28 @@ export default {
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options
   */
-  axios: {},
-  // router: {
-  //   middleware: ['auth']
-  // }
+  axios: {
+    baseURL: 'https://arcane-mountain-95630.herokuapp.com'
+  },
+  auth: {
+    strategies: {
+      local: {
+        endpoints: {
+          login: { url: 'auth/signin', method: 'post', propertyName: 'token' },
+          user: { url: 'user/', method: 'get', propertyName: false },
+          logout: false
+        }
+      }
+    },
+    redirect: {
+      login: '/login',
+      logout: '/',
+      callback: '/',
+      home: '/instructor'
+    }
+  },
+  router: {
+  },
   /*
   ** vuetify module configuration
   ** https://github.com/nuxt-community/vuetify-module

@@ -1,8 +1,12 @@
 <template>
   <v-container fluid>
-    <v-row>
-      <v-card>Hello</v-card>
-    </v-row>
+    <v-container>
+      <v-row>
+        <v-btn class="white black--text" to="/login">
+          Get Started
+        </v-btn>
+      </v-row>
+    </v-container>
   </v-container>
 </template>
 
@@ -13,3 +17,5 @@ export default {
   }
 }
 </script>
+<style  scoped>
+</style>
