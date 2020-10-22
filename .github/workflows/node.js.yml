@@ -20,9 +20,12 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - uses: borales/actions-yarn@v2.0.0
+    - name: Uses Node.js ${{ matrix.mode-version }}
+      uses: actions/setup-node@v1
       with:
-          cmd: install #will run `yarn install` command
-    - uses: borales/actions-yarn@v2.0.0
-      with:
-          cmd: build #will run `yarn build` command
+              node-version: ${{ matrix.node-version }}
+    - name: Install Dependencies
+      run: yarn --frozen-lockfile
+    - name: Generate
+      run: yarn generate
+
