@@ -165,6 +165,7 @@
 <script>
 import TaInput from '@/components/TaInput'
 export default {
+  middleware: ['auth'],
   components: {
     TaInput
   },

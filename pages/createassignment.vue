@@ -167,6 +167,7 @@
 import AddTask from '@/components/AddTask'
 import DateInput from '@/components/DateInput'
 export default {
+  middleware: ['auth'],
   components: {
     AddTask,
     DateInput
