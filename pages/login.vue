@@ -4,13 +4,21 @@
       <v-row align="center" justify="center">
         <v-col cols="12" sm="8" md="8">
           <v-card class="elevation-12">
-            <v-progress-linear v-if="loading" height="6" indeterminate color="white darken-2" />
+            <v-progress-linear
+              v-if="loading"
+              height="6"
+              indeterminate
+              color="white darken-2"
+            />
             <v-window v-model="step">
               <v-window-item :value="1" class="cin">
                 <v-row>
                   <v-col cols="12" md="8" class="accent">
                     <v-card-text class="mt-12">
-                      <h1 class="text-center display-2 white--text" style="opacity:0.8">
+                      <h1
+                        class="text-center display-2 white--text"
+                        style="opacity: 0.8"
+                      >
                         Sign in
                       </h1>
                       <div class="text-center mt-4">
@@ -19,17 +27,9 @@
                           fab
                           color="blue"
                           outlined
-                          style="opacity:0.8"
+                          style="opacity: 0.8"
                           @click="facebook"
                         >
-                      <h1
-                        class="text-center display-2 white--text"
-                        style="opacity:0.8"
-                      >
-                        Sign in to web
-                      </h1>
-                      <div class="text-center mt-4">
-                        <v-btn class="mx-2" fab color="blue" outlined style="opacity:0.8">
                           <v-icon large>
                             mdi-facebook
                           </v-icon>
@@ -39,18 +39,21 @@
                           fab
                           color="white"
                           outlined
-                          style="opacity:0.8"
+                          style="opacity: 0.8"
                           @click="google"
                         >
-                        <v-btn class="mx-2" fab color="white" outlined style="opacity:0.8">
                           <v-icon large>
                             mdi-google-plus
                           </v-icon>
                         </v-btn>
-                        <v-btn class="mx-2" fab color="white" outlined @click="github">
+                        <v-btn
+                          class="mx-2"
+                          fab
+                          color="white"
+                          outlined
+                          @click="github"
+                        >
                           <v-icon color="white" large>
-                        <v-btn class="mx-2" fab color="black" outlined>
-                          <v-icon large>
                             mdi-github
                           </v-icon>
                         </v-btn>
@@ -64,7 +67,6 @@
                           prepend-icon="mdi-email"
                           type="text"
                           :rules="[rules.minlength]"
-                          :rules="[rules.emailRule]"
                           required
                           color="primary"
                         />
@@ -83,11 +85,9 @@
                           @click:append="show3 = !show3"
                         />
                       </v-form>
-                      <div style="text-align:center;">
+                      <div style="text-align: center">
                         <v-btn v-if="!socialAuth" text to="/ForgotPassword">
                           Forgot password ?
-                        <v-btn text>
-                          Forgot your password
                         </v-btn>
                       </div>
                     </v-card-text>
@@ -119,10 +119,6 @@
                   <v-col cols="12" md="8" class="accent">
                     <v-card-text class="mt-12">
                       <h1 class="text-center display-2 white--text">
-                      <h1
-                        class="text-center display-2 white--text"
-                        style="opacity:0.8"
-                      >
                         Create Account
                       </h1>
 
@@ -133,10 +129,9 @@
                           fab
                           color="blue"
                           outlined
-                          style="opacity:0.8"
+                          style="opacity: 0.8"
                           @click="facebook"
                         >
-                        <v-btn class="mx-2" fab color="blue" outlined style="opacity:0.8">
                           <v-icon large>
                             mdi-facebook
                           </v-icon>
@@ -146,16 +141,20 @@
                           fab
                           color="white"
                           outlined
-                          style="opacity:0.8"
+                          style="opacity: 0.8"
                           @click="google"
                         >
-                        <v-btn class="mx-2" fab color="white" outlined style="opacity:0.8">
                           <v-icon large>
                             mdi-google-plus
                           </v-icon>
                         </v-btn>
-                        <v-btn class="mx-2" fab color="black" outlined @click="github">
-                        <v-btn class="mx-2" fab color="black" outlined>
+                        <v-btn
+                          class="mx-2"
+                          fab
+                          color="black"
+                          outlined
+                          @click="github"
+                        >
                           <v-icon large>
                             mdi-github
                           </v-icon>
@@ -196,7 +195,6 @@
                           prepend-icon="mdi-email"
                           type="text"
                           :rules="[rules.minlength]"
-                          :rules="[rules.minlength,rules.emailRule]"
                           required
                           color="primary"
                         />
@@ -206,7 +204,7 @@
                           name="Rollnumber"
                           prepend-icon="mdi-account"
                           type="text"
-                          :rules="[rules.rollRule,rules.minlength]"
+                          :rules="[rules.rollRule, rules.minlength]"
                           :maxlength="11"
                           required
                           color="primary"
@@ -293,7 +291,10 @@
           Verify your Email
         </v-card-title>
 
-        <v-card-text>A Verification email is send to you , click on the link provided in it to verify your email</v-card-text>
+        <v-card-text>
+          A Verification email is send to you , click on the link provided in
+          it to verify your email
+        </v-card-text>
 
         <v-card-actions>
           <v-spacer />
@@ -308,9 +309,12 @@
         <v-card-title class="headline">
           Verify your Email
         </v-card-title>
-        <v-card-text>Please verify you email to continue , click on the verify buttton to send you a verification email</v-card-text>
+        <v-card-text>
+          Please verify you email to continue , click on the verify buttton to
+          send you a verification email
+        </v-card-text>
         <v-card-actions>
-          <v-btn color="red darken-1" text @click="signIndialog = false ">
+          <v-btn color="red darken-1" text @click="signIndialog = false">
             CANCEL
           </v-btn>
           <v-spacer />
@@ -328,15 +332,11 @@ import firebase, { auth } from 'firebase/app'
 export default {
   middleware: ['auth'],
   auth: 'guest',
-  props: {
-    source: String
-  },
   data () {
     return {
       step: 1, // window change on clicking signup or signin
       items: ['IIT BHU', 'IIT Bombay', 'IIT Madras', 'IIT Delhi'],
       Gender: ['male', 'female', 'other'],
-      Gender: ['Male', 'Female', 'Others'],
       Email: '', // capital duplicate fields like Email indicate signup form
       password: '',
       FirstName: '',
@@ -364,11 +364,6 @@ export default {
         emailRule: v => this.mailPattern.test(v) || 'Invalid email!',
         rollRule: v =>
           v.length < 12 || 'Roll number must be less than 12 digits',
-      color: 'error', // snackbar
-      mailPattern: /^(([^<>()\\[\]\\.,;:\s@"]+(\.[^<>()\\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-      rules: {
-        minlength: v => !!v || 'Required!',
-        emailRule: v => this.mailPattern.test(v) || 'Invalid email!',
         psmin: v =>
           v.length >= 8 || 'Password should be atleast 8 characters '
       } // basic check for fields
@@ -429,7 +424,9 @@ export default {
           } else {
             this.displaySnackbar('Password required', 'error')
           }
-        } else { this.displaySnackbar('Invalid email', 'error') }
+        } else {
+          this.displaySnackbar('Invalid email', 'error')
+        }
       } else {
         this.login()
       }
@@ -486,9 +483,15 @@ export default {
                     'error'
                   )
                 }
-              } else { this.displaySnackbar('Required Rollnumber', 'error') }
-            } else { this.displaySnackbar('Invalid Email', 'error') }
-          } else { this.displaySnackbar('Required Gender', 'error') }
+              } else {
+                this.displaySnackbar('Required Rollnumber', 'error')
+              }
+            } else {
+              this.displaySnackbar('Invalid Email', 'error')
+            }
+          } else {
+            this.displaySnackbar('Required Gender', 'error')
+          }
         } else {
           this.displaySnackbar('Required Firstname', 'error')
         }
@@ -542,9 +545,15 @@ export default {
           if (this.institute && this.institute.length > 0) {
             this.register()
             this.$router.push('/login')
-          } else { this.displaySnackbar('Required Institue', 'error') }
-        } else { this.displaySnackbar('Required Rollnumber', 'error') }
-      } else { this.displaySnackbar('Required Gender', 'error') }
+          } else {
+            this.displaySnackbar('Required Institue', 'error')
+          }
+        } else {
+          this.displaySnackbar('Required Rollnumber', 'error')
+        }
+      } else {
+        this.displaySnackbar('Required Gender', 'error')
+      }
     },
     register () {
       this.$store.dispatch('authStore/SignUp', {
@@ -567,17 +576,21 @@ export default {
     },
     login () {
       this.loading = true
-      this.$auth.loginWith('local', {
-        data: {
-          idToken: this.idToken
-        }
-      }).then(() => {
-        this.loading = false
-      })
+      this.$auth
+        .loginWith('local', {
+          data: {
+            idToken: this.idToken
+          }
+        })
+        .then(() => {
+          this.loading = false
+        })
         .catch((err) => {
           this.loading = false
           if (err.message === 'Request failed with status code 404') {
-            this.displaySnackbar('No Account Registered with this email , Please SignUp to Continue ! ')
+            this.displaySnackbar(
+              'No Account Registered with this email , Please SignUp to Continue ! '
+            )
           } else {
             this.displaySnackbar(err.message)
           }
@@ -598,44 +611,6 @@ export default {
     toSignin () {
       this.dialog = false
       this.$router.push('/login')
-    ValidSignin () {
-      // checks email first then password
-      if (this.email.length > 0 && this.mailPattern.test(this.email)) {
-        if (this.password.length > 0) {
-          // this.displaySnackbar("Successfully signed in", "success");
-        } else {
-          this.displaySnackbar('Password required', 'error')
-        }
-      } else { this.displaySnackbar('Invalid email', 'error') }
-    },
-    ValidSignup () {
-      // checks the fields accordingly to the form if first is ok it goes onto second
-      if (this.FirstName.length > 0) {
-        if (this.gender && this.gender.length > 0) {
-          if (this.Email.length > 0 && this.mailPattern.test(this.Email)) {
-            if (this.Password.length > 7) {
-              if (this.CPassword === this.Password) {
-                if (this.institute && this.institute.length > 0) {
-                  this.displaySnackbar('Successfully Signed Up', 'success')
-                } else {
-                  this.displaySnackbar('Required Institue', 'error')
-                }
-              } else {
-                this.displaySnackbar('Passwords dont match', 'error')
-              }
-            } else if (!this.Password.length) {
-              this.displaySnackbar('Password required', 'error')
-            } else {
-              this.displaySnackbar(
-                'Password should be minimum of 8 characters',
-                'error'
-              )
-            }
-          } else { this.displaySnackbar('Invalid Email', 'error') }
-        } else { this.displaySnackbar('Required Gender', 'error') }
-      } else {
-        this.displaySnackbar('Required Firstname', 'error')
-      }
     }
   }
 }
