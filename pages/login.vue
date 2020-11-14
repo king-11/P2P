@@ -584,6 +584,9 @@ export default {
         })
         .then(() => {
           this.loading = false
+          this.$store.dispatch('teacherStore/getCourses', {
+            token: this.$auth.getToken('local')
+          })
         })
         .catch((err) => {
           this.loading = false

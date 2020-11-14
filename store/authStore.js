@@ -29,6 +29,7 @@ export const actions = {
         
         axios.post(`${BASE_URL}/auth/signup`, payload)
             .then(token => {
+                this.$router.push('/instructor')
                 commit('snackbar', {
                     show: true,
                     color: "green",

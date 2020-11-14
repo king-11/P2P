@@ -7,9 +7,17 @@
       <v-spacer />
       <v-tooltip bottom>
         <template v-slot:activator="{ on, attrs }">
-          <v-btn class="white black--text" v-bind="attrs" fab x-small v-on="on">
-            <v-icon>mdi-plus</v-icon>
-          </v-btn>
+          <nuxt-link v-if="isTeacher" to="/createcourse" style="color: inherit;text-decoration: none;">
+            <v-btn
+              class="white black--text"
+              v-bind="attrs"
+              fab
+              x-small
+              v-on="on"
+            >
+              <v-icon>mdi-plus</v-icon>
+            </v-btn>
+          </nuxt-link>
         </template>
         <span>Add a new course</span>
       </v-tooltip>
@@ -21,7 +29,7 @@
       >
         <div
           v-for="course in courses"
-          :key="course.id"
+          :key="course._id"
           class="course-list my-4 mx-3"
         >
           <v-card class="mx-auto" max-width="344" elevation="20" ripple rounded>
@@ -46,12 +54,21 @@
               </template>
               <span>edit course</span>
             </v-tooltip>
-            <nuxt-link to style="color: inherit;text-decoration: none;">
+            <nuxt-link :to="'/courses/' + course._id " style="color: inherit;text-decoration: none;">
               <v-img
                 src="https://d3gthpli891tsj.cloudfront.net/wp-content/uploads/2019/01/22063215/GATE-Crash-Course.jpg"
                 height="200px"
               />
-              <v-card-title>{{ course.title }}</v-card-title>
+              <v-card-title>
+                {{ course.name }}
+                <v-spacer />
+                <v-chip
+                  class="ml-10"
+                  label
+                >
+                  {{ course.code }}
+                </v-chip>
+              </v-card-title>
 
               <v-card-subtitle>You're the Insructor</v-card-subtitle>
             </nuxt-link>
@@ -88,9 +105,22 @@
 <script>
 export default {
   middleware: ['auth'],
+  async fetch () {
+    const header = {
+      headers: {
+        Authorization: this.$auth.getToken('local')
+      }
+    }
+    let courses = await this.$axios.$get('https://arcane-mountain-95630.herokuapp.com/teacher/course/', header)
+    courses = courses.map((e) => {
+      e.show = false
+      return e
+    })
+    this.courses = courses
+  },
   data () {
     return {
-      // headeres for  assignments table
+      // headers for  assignments table
       headers: [
         {
           text: 'Name',
@@ -101,62 +131,8 @@ export default {
         { text: 'Last Date', value: 'lastDate' },
         { text: 'No of submissions', value: 'nfs' }
       ],
-      // sample data
-      // nfs : no of submissions
-      courses: [
-        {
-          id: 1,
-          title: 'course 1 ',
-          // for dropdown of assignments
-          show: false,
-          assignments: [
-            {
-              name: 'Assignment1 ',
-              lastDate: '15 August 2020',
-              nfs: '10'
-            },
-            {
-              name: 'Assignment2',
-              lastDate: '21 August 2020',
-              nfs: '20'
-            },
-            {
-              name: 'Assignment3',
-              lastDate: '30 August 2020',
-              nfs: '3'
-            }
-          ]
-        },
-        {
-          id: 2,
-          title: 'course 2 ',
-          show: false,
-          assignments: [
-            {
-              name: 'Assignment1 ',
-              lastDate: '15 August 2020',
-              nfs: '10'
-            },
-            {
-              name: 'Assignment2',
-              lastDate: '21 August 2020',
-              nfs: '20'
-            }
-          ]
-        },
-        {
-          id: 3,
-          title: 'course 3 ',
-          show: false,
-          assignments: []
-        },
-        {
-          id: 4,
-          title: 'course 4 ',
-          show: false,
-          assignments: []
-        }
-      ]
+      courses: [],
+      isTeacher: this.$auth.user.data.teacher
     }
   },
   methods: {

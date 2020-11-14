@@ -6,7 +6,7 @@
     </v-main>
     <v-snackbar
       v-if="snackbar.show"
-      v-model="snackbar.show"
+      :value="snackbar"
       :app="true"
       :timeout="5000"
       elevation="20"

@@ -118,8 +118,8 @@
                         <v-divider vertical class="mx-4" />
                         <div>
                           <div
-                            v-for="(criterion, index) in task.reviewAreas"
-                            :key="index"
+                            v-for="(criterion, ind) in task.reviewAreas"
+                            :key="ind"
                           >
                             <v-row class="point-section">
                               <v-col>

@@ -4,7 +4,7 @@
       <v-col cols="12" md="10">
         <v-card elevation="2">
           <v-card-title class="info--text">
-            Create Assignment
+            Create Course
           </v-card-title>
           <v-divider />
           <v-card-text justify="center">
@@ -40,57 +40,6 @@
                     color="primary"
                     :rules="[rules.minlength]"
                     required
-                    :outlined="breakpoint"
-                  />
-                </v-col>
-              </v-row>
-              <v-row class="mx-n4">
-                <div>
-                  <v-card-subtitle class="info--text">
-                    Class Representatives Details
-                    <small>(optional)</small>
-                  </v-card-subtitle>
-                  <v-divider class="mt-n2" />
-                </div>
-              </v-row>
-              <v-row>
-                <v-col cols="12" md="6">
-                  <v-text-field
-                    v-model="cr1Name"
-                    type="text"
-                    label="Name-1"
-                    placeholder="Name of class representative-1"
-                    :outlined="breakpoint"
-                  />
-                </v-col>
-                <v-col cols="12" md="6">
-                  <v-text-field
-                    v-model="cr1Email"
-                    type="email"
-                    label="Email-1"
-                    placeholder="Email address of class representative-1"
-                    :rules="[rules.optionalMinLength, rules.emailRule]"
-                    :outlined="breakpoint"
-                  />
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col cols="12" md="6">
-                  <v-text-field
-                    v-model="cr2Name"
-                    type="text"
-                    label="Name-2"
-                    placeholder="Name of class representative-2"
-                    :outlined="breakpoint"
-                  />
-                </v-col>
-                <v-col cols="12" md="6">
-                  <v-text-field
-                    v-model="cr2Email"
-                    type="email"
-                    label="Email-2"
-                    placeholder="Email address of class representative-2"
-                    :rules="[rules.optionalMinLength, rules.emailRule]"
                     :outlined="breakpoint"
                   />
                 </v-col>
@@ -173,10 +122,6 @@ export default {
     return {
       name: '',
       code: '',
-      cr1Name: '',
-      cr1Email: '',
-      cr2Name: '',
-      cr2Email: '',
       snackbarMessage: '',
       showSnackbar: false,
       color: 'error',
@@ -239,32 +184,9 @@ export default {
       }
       return true
     },
-    crDetailsValidation () {
-      if (this.cr1Name.length > 0 || this.cr1Email.length > 0) {
-        if (!(this.cr1Name.length > 0)) {
-          this.displaySnackbar('Invalid class representative-1 name!', 'error')
-          return false
-        }
-        if (!((this.cr1Email.length > 0) && this.mailPattern.test(this.cr1Email))) {
-          this.displaySnackbar('Invalid class reprsentative-1 e-mail!', 'error')
-          return false
-        }
-      }
-      if (this.cr2Name.length > 0 || this.cr2Email.length > 0) {
-        if (!(this.cr2Name.length > 0)) {
-          this.displaySnackbar('Invalid class representative-2 name!', 'error')
-          return false
-        }
-        if (!((this.cr2Email.length > 0) && this.mailPattern.test(this.cr2Email))) {
-          this.displaySnackbar('Invalid class reprsentative-2 e-mail!', 'error')
-          return false
-        }
-      }
-      return true
-    },
     taDetailsValidation () {
       this.TAs.forEach((element) => {
-        if (!(element.name, length > 0)) {
+        if (!(element.name.length > 0)) {
           this.displaySnackbar('Some teaching assistant(s) have invalid name!', 'error')
           return false
         }
@@ -276,9 +198,18 @@ export default {
       return true
     },
     saveCourse () {
-      if (this.courseDetailsValidation() && this.crDetailsValidation() && this.taDetailsValidation()) {
-        // During api integration this display of snackbar will removed and proper redirection will be specified
-        this.displaySnackbar('You successfully created the course!', 'success')
+      if (this.courseDetailsValidation() && this.taDetailsValidation()) {
+        const TAsEmails = this.TAs.map((ta) => {
+          return ta.email
+        })
+        this.$store.dispatch('teacherStore/createCourse', {
+          token: this.$auth.getToken('local'),
+          data: {
+            name: this.name,
+            code: this.code,
+            ta: TAsEmails
+          }
+        })
       }
     }
   }
