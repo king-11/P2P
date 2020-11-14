@@ -78,7 +78,7 @@ export default {
       login: '/login',
       logout: '/',
       callback: '/',
-      home: '/instructor'
+      home: '/courses'
     }
   },
   router: {
