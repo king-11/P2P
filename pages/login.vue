@@ -544,7 +544,6 @@ export default {
         if (this.Rollnumber) {
           if (this.institute && this.institute.length > 0) {
             this.register()
-            this.$router.push('/login')
           } else {
             this.displaySnackbar('Required Institue', 'error')
           }
@@ -555,8 +554,8 @@ export default {
         this.displaySnackbar('Required Gender', 'error')
       }
     },
-    register () {
-      this.$store.dispatch('authStore/SignUp', {
+    async register () {
+      const result = await this.$store.dispatch('authStore/SignUp', {
         first_name: this.FirstName,
         last_name: this.LastName,
         email: this.Email,
@@ -567,12 +566,10 @@ export default {
         roll_number: this.Rollnumber,
         idToken: this.idToken
       })
-      if (this.socialAuth) {
-        // to signin page
-        this.$router.push('/login')
-        window.location.reload()
-      }
       this.loading = false
+      if (this.socialAuth && result) {
+        this.$router.push('/login')
+      }
     },
     login () {
       this.loading = true

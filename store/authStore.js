@@ -1,4 +1,4 @@
-/* eslint-disable */     
+/* eslint-disable */
 import firebase from 'firebase/app';
 import 'firebase/database'
 import 'firebase/storage'
@@ -24,35 +24,33 @@ export const mutations = {
 export const actions = {
 
     async SignUp({ commit }, payload) {
-
-        console.log(payload)
-        
-        axios.post(`${BASE_URL}/auth/signup`, payload)
+        let condition = true
+        await axios.post(`${BASE_URL}/auth/signup`, payload)
             .then(token => {
-                this.$router.push('/instructor')
                 commit('snackbar', {
                     show: true,
                     color: "green",
                     message: "Account Created succesfully"
                 })
+                condition = true;
             }).catch(err => {
                 commit('snackbar', {
                     show: true,
                     color: "red",
                     message: "An Acoount with this email Alredy exists ! "
                 })
+                condition = false;
             })
+        return condition
     },
 
-    editUser({ commit, state },payload ) {
-
+    async editUser({ commit, state },payload ) {
         const config = {
             headers: {
                 Authorization: payload.token,
             }
         }
-
-        axios.put(`${BASE_URL}/user/`,payload.updatedUser , config )
+        await axios.put(`${BASE_URL}/user/`,payload.updatedUser , config )
             .then(res => {
                 commit('snackbar', {
                     show: true,
@@ -70,15 +68,14 @@ export const actions = {
 
     },
 
-    editProfileImage({ commit },payload){
-        
+    async editProfileImage({ commit },payload){
         const user = firebase.auth().currentUser ;
-        
-       firebase.storage().ref('users/' + user.uid ).put(payload.file)
+
+       await firebase.storage().ref('users/' + user.uid ).put(payload.file)
        .then(async (fileData) => {
 
           const  imageUrl = await firebase.storage().ref('users').child(fileData.metadata.name).getDownloadURL()
-       
+
             user.updateProfile({
                 photoURL: imageUrl
               }).then(function() {
