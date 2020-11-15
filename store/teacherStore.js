@@ -64,6 +64,35 @@ export const actions = {
     })
   },
 
+  updateCourse ({ commit }, payload) {
+
+    const header = {
+      headers: {
+        Authorization: payload.token
+      }
+    }
+   axios.put(`${BASE_URL}/teacher/course/${payload.id}`,payload.data ,header )
+    .then(data => {
+        this.$router.push(`/courses/${payload.id}`)
+        commit('authStore/snackbar', {
+            show: true,
+            color: "green",
+            message: "Course updated Succesfully !"
+        },{ root: true })
+    }).catch( err => {
+      let msg = err.message
+      if(err.message == 'Request failed with status code 400'){
+          msg = 'A course with this code already Exists ! Please choose other code'
+      }
+        commit('authStore/snackbar', {
+            show: true,
+            color: "red",
+            message: msg
+        },{ root: true })
+    })
+  },
+
+
 }
 
 export const getters = {

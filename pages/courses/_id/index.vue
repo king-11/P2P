@@ -66,7 +66,7 @@
                     </template>
                     <v-list>
                       <v-list-item v-for="(item, i) in course.ta" :key="i">
-                        <v-list-item-title>{{ item }}</v-list-item-title>
+                        <v-list-item-title>{{ item.email }}</v-list-item-title>
                       </v-list-item>
                     </v-list>
                   </v-list-group>
@@ -172,6 +172,7 @@
         dark
         small
         color="green"
+        :to="'/courses/'+ this.$route.params.id + '/edit'"
       >
         <v-icon>mdi-pencil</v-icon>
       </v-btn>

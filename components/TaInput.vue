@@ -146,6 +146,10 @@ export default {
       editMode: false
     }
   },
+  mounted () {
+    this.bufferTa.email = this.ta.email
+    this.bufferTa.name = this.ta.first_name
+  },
   methods: {
     validateTa () {
       if (this.bufferTa.name.length > 0) {
