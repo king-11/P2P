@@ -4,24 +4,6 @@
       <v-col cols="12" sm="5">
         <v-text-field
           v-if="editMode"
-          v-model="bufferTa.name"
-          type="text"
-          label="Name"
-          color="primary"
-          placeholder="Name of teaching assistant"
-          :rules="[rules.minlength]"
-          :disabled="!editMode"
-          :outlined="breakpoint"
-          required
-        />
-        <v-sheet v-else class="ml-1">
-          <strong class="info--text">Name:</strong> {{ ta.name }}
-          <v-divider />
-        </v-sheet>
-      </v-col>
-      <v-col cols="12" sm="5">
-        <v-text-field
-          v-if="editMode"
           v-model="bufferTa.email"
           type="text"
           label="Email"
@@ -140,7 +122,6 @@ export default {
       },
       // we will always edit buffer ta and not actual prop
       bufferTa: {
-        name: '',
         email: ''
       },
       editMode: false
@@ -148,19 +129,13 @@ export default {
   },
   mounted () {
     this.bufferTa.email = this.ta.email
-    this.bufferTa.name = this.ta.first_name
   },
   methods: {
     validateTa () {
-      if (this.bufferTa.name.length > 0) {
-        if (this.bufferTa.email.length > 0 && this.mailPattern.test(this.bufferTa.email)) {
-          return true
-        } else {
-          this.$emit('display:snackbar', 'Invalid email!')
-          return false
-        }
+      if (this.bufferTa.email.length > 0 && this.mailPattern.test(this.bufferTa.email)) {
+        return true
       } else {
-        this.$emit('display:snackbar', 'Invalid name!')
+        this.$emit('display:snackbar', 'Invalid email!')
         return false
       }
     },
@@ -181,7 +156,7 @@ export default {
     discardHandler () {
       if (this.editMode) {
         // don't update actual ta object and clear the buffer ta
-        this.bufferTa = Object.assign(this.bufferTa, { name: '', email: '' })
+        this.bufferTa = Object.assign(this.bufferTa, { email: '' })
         this.editMode = !this.editMode
       } else {
         // emit signal to delete the actual ta.

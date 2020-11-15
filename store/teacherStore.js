@@ -39,8 +39,6 @@ export const actions = {
 
   deleteCourse ({ commit }, payload) {
 
-    console.log(payload)
-
     const header = {
       headers: {
         Authorization: payload.token
@@ -65,7 +63,7 @@ export const actions = {
   },
 
   updateCourse ({ commit }, payload) {
-
+    
     const header = {
       headers: {
         Authorization: payload.token

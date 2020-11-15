@@ -116,7 +116,6 @@ export default {
     this.code = course.code;
     course.ta.forEach( (ta) => {
         this.TAs.push({
-        name: "Example Name",
         email: ta.email,
       });
     } ) 
@@ -167,7 +166,6 @@ export default {
     },
     addTa() {
       this.TAs.push({
-        name: "Example Name",
         email: "something@example.com",
       });
     },
@@ -192,13 +190,6 @@ export default {
     taDetailsValidation() {
         console.log(this.TAs)
       this.TAs.forEach((element) => {
-        if (!(element.name.length > 0)) {
-          this.displaySnackbar(
-            "Some teaching assistant(s) have invalid name!",
-            "error"
-          );
-          return false;
-        }
         if (
           !(element.email.length > 0 && this.mailPattern.test(element.email))
         ) {

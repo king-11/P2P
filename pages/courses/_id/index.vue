@@ -111,12 +111,13 @@
         </div>
       </v-col>
     </v-row>
+    <v-container>
     <div
       v-for="(assg, i) in assignments"
       :key="i"
     >
       <v-row style="margin-top: 4vh">
-        <v-col cols="12" lg="9" md="11" style="margin: auto; padding: 0">
+        <v-col cols="12" lg="10" md="11" style="margin: auto; padding: 0">
           <v-card>
             <v-row>
               <v-col cols="1" class="hidden-xs-only">
@@ -138,6 +139,7 @@
         </v-col>
       </v-row>
     </div>
+    </v-container>
     <div  v-if="!noAssg" class="text-xs-center mt-3 ml-10">
         No assignments in this course yet ! 
     </div>
@@ -277,7 +279,7 @@ export default {
   bottom: 0;
   margin: 0 0 16px 16px;
   position: fixed;
-  bottom: 50px;
+  bottom: 70px;
   right: 50px;
 }
 .overflow {
