@@ -141,16 +141,78 @@
     <div  v-if="!noAssg" class="text-xs-center mt-3 ml-10">
         No assignments in this course yet ! 
     </div>
-    <nuxt-link
-      to="/createassignment"
-      style="color: inherit; text-decoration: none"
+    <v-speed-dial
+      v-if="teacher"
+      :v-model="fab"
+      bottom
+      right
+      direction="top"
+      open-on-hover
+      transition="slide-y-reverse-transition"
+      class="fab"
     >
-      <v-fab-transition>
-        <v-btn v-if="teacher" color="primary" fab large dark class="fab">
-          <v-icon>mdi-plus</v-icon>
+      <template v-slot:activator>
+        <v-btn
+          v-model="fab"
+          color="blue darken-2"
+          dark
+          fab
+          large
+        >
+          <v-icon v-if="fab">
+            mdi-close
+          </v-icon>
+          <v-icon v-else>
+            mdi-account-circle
+          </v-icon>
         </v-btn>
-      </v-fab-transition>
-    </nuxt-link>
+      </template>
+      <v-btn
+        fab
+        dark
+        small
+        color="green"
+      >
+        <v-icon>mdi-pencil</v-icon>
+      </v-btn>
+      <v-btn
+        fab
+        dark
+        small
+        color="indigo"
+        to="/createassignment"
+      >
+        <v-icon>mdi-plus</v-icon>
+      </v-btn>
+      <v-btn
+        fab
+        dark
+        small
+        color="red"
+        @click="dialog"
+      >
+        <v-icon>mdi-delete</v-icon>
+      </v-btn>
+    </v-speed-dial>
+    <v-dialog v-model="deleteConfirm" max-width="290">
+      <v-card>
+        <v-card-title class="headline">
+          Confirm 
+        </v-card-title>
+        <v-card-text>
+          Are you sure to delete this course ?  All the assignments related to this course will also be deleted automatically . 
+        </v-card-text>
+        <v-card-actions>
+          <v-btn color="red darken-1" text @click="deleteConfirm = false">
+            CANCEL
+          </v-btn>
+          <v-spacer />
+          <v-btn color="green darken-1" text @click="deleteCourse">
+            CONFIRM
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-container>
 </template>
 <script>
@@ -171,6 +233,8 @@ export default {
     this.instructor = course.instructor;
   },
   data: () => ({
+    deleteConfirm : false ,
+    fab : false,
     course: {},
     instructor: {},
     assignments : [
@@ -194,6 +258,16 @@ export default {
       teacher(){
          return this.$auth.user.data.teacher
       }
+  },
+  methods : {
+    dialog (){
+      this.deleteConfirm = true 
+    },
+    deleteCourse (){
+       this.$store.dispatch('teacherStore/deleteCourse',{
+         token : this.$auth.getToken("local"),
+         id : this.$route.params.id })
+    }
   }
 };
 </script>

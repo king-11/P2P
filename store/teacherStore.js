@@ -18,7 +18,7 @@ export const actions = {
     }
    axios.post(`${BASE_URL}/teacher/course/`,payload.data ,header )
     .then(data => {
-        this.$router.push('/instructor')
+        this.$router.push('/courses')
         commit('authStore/snackbar', {
             show: true,
             color: "green",
@@ -35,7 +35,35 @@ export const actions = {
             message: msg
         },{ root: true })
     })
-  }
+  },
+
+  deleteCourse ({ commit }, payload) {
+
+    console.log(payload)
+
+    const header = {
+      headers: {
+        Authorization: payload.token
+      }
+    }
+   axios.delete(`${BASE_URL}/teacher/course/${payload.id}`,header )
+    .then(data => {
+        this.$router.push('/courses')
+        commit('authStore/snackbar', {
+            show: true,
+            color: "green",
+            message: "Course deleted Succesfully !"
+        },{ root: true })
+    }).catch( err => {
+  
+        commit('authStore/snackbar', {
+            show: true,
+            color: "red",
+            message: err.message
+        },{ root: true })
+    })
+  },
+
 }
 
 export const getters = {
