@@ -3,7 +3,9 @@
     <v-row row wrap justify="center">
       <v-col cols="12" md="10">
         <v-card elevation="2">
-          <v-card-title class="info--text"> Edit Course </v-card-title>
+          <v-card-title class="info--text">
+            Edit Course
+          </v-card-title>
           <v-divider />
           <v-card-text justify="center">
             <v-form>
@@ -54,9 +56,9 @@
                 </div>
               </v-row>
               <v-row v-if="TAs.length === 0" justify="center">
-                <small class="text-caption font-weight-medium"
-                  >No teaching assistants for this course.</small
-                >
+                <small
+                  class="text-caption font-weight-medium"
+                >No teaching assistants for this course.</small>
               </v-row>
               <v-row v-for="(ta, index) in course.ta" v-else :key="index">
                 <v-col my-0 py-0>
@@ -97,129 +99,129 @@
   </div>
 </template>
 <script>
-import TaInput from "@/components/TaInput";
+import TaInput from '@/components/TaInput'
 export default {
-  middleware: ["auth"],
-  async fetch() {
+  middleware: ['auth'],
+  components: {
+    TaInput
+  },
+  async fetch () {
     const header = {
       headers: {
-        Authorization: this.$auth.getToken("local"),
-      },
-    };
-    let course = await this.$axios.$get(
+        Authorization: this.$auth.getToken('local')
+      }
+    }
+    const course = await this.$axios.$get(
       `https://arcane-mountain-95630.herokuapp.com/teacher/course/${this.$route.params.id}`,
       header
-    );
-    console.log(course);
-    this.course = course 
-    this.name = course.name;
-    this.code = course.code;
-    course.ta.forEach( (ta) => {
-        this.TAs.push({
-        email: ta.email,
-      });
-    } ) 
+    )
+    console.log(course)
+    this.course = course
+    this.name = course.name
+    this.code = course.code
+    course.ta.forEach((ta) => {
+      this.TAs.push({
+        email: ta.email
+      })
+    })
   },
-  components: {
-    TaInput,
-  },
-  data() {
+  data () {
     return {
-      course : {},
-      name: "",
-      code: "",
-      snackbarMessage: "",
+      course: {},
+      name: '',
+      code: '',
+      snackbarMessage: '',
       showSnackbar: false,
-      color: "error",
+      color: 'error',
       TAs: [],
       // eslint-disable-next-line no-useless-escape
       mailPattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
       rules: {
-        minlength: (v) => !!v || "Required!",
-        optionalMinLength: (v) => !!v || "Length should not be zero!",
-        emailRule: (v) => this.mailPattern.test(v) || "Invalid email!",
-      },
-    };
+        minlength: v => !!v || 'Required!',
+        optionalMinLength: v => !!v || 'Length should not be zero!',
+        emailRule: v => this.mailPattern.test(v) || 'Invalid email!'
+      }
+    }
   },
   computed: {
-    breakpoint() {
+    breakpoint () {
       switch (this.$vuetify.breakpoint.name) {
-        case "xs":
-          return true;
-        case "sm":
-          return false;
-        case "md":
-          return false;
-        case "lg":
-          return false;
-        case "xl":
-          return false;
+        case 'xs':
+          return true
+        case 'sm':
+          return false
+        case 'md':
+          return false
+        case 'lg':
+          return false
+        case 'xl':
+          return false
       }
-      return false;
-    },
+      return false
+    }
   },
   methods: {
-    displaySnackbar(message, color) {
-      this.snackbarMessage = message;
-      this.color = color || "error";
-      this.showSnackbar = true;
+    displaySnackbar (message, color) {
+      this.snackbarMessage = message
+      this.color = color || 'error'
+      this.showSnackbar = true
     },
-    addTa() {
+    addTa () {
       this.TAs.push({
-        email: "something@example.com",
-      });
+        email: 'something@example.com'
+      })
     },
-    editTa({ ta, index }) {
-      this.TAs[index] = ta;
-      this.displaySnackbar("TA details updated successfully!", "success");
+    editTa ({ ta, index }) {
+      this.TAs[index] = ta
+      this.displaySnackbar('TA details updated successfully!', 'success')
     },
-    deleteTa(index) {
-      this.TAs = this.TAs.filter((e, ind) => ind !== index);
+    deleteTa (index) {
+      this.TAs = this.TAs.filter((e, ind) => ind !== index)
     },
-    courseDetailsValidation() {
+    courseDetailsValidation () {
       if (!(this.name.length > 0)) {
-        this.displaySnackbar("Invalid course name!", "error");
-        return false;
+        this.displaySnackbar('Invalid course name!', 'error')
+        return false
       }
       if (!(this.code.length > 0)) {
-        this.displaySnackbar("Invalid course code!", "error");
-        return false;
+        this.displaySnackbar('Invalid course code!', 'error')
+        return false
       }
-      return true;
+      return true
     },
-    taDetailsValidation() {
-        console.log(this.TAs)
+    taDetailsValidation () {
+      console.log(this.TAs)
       this.TAs.forEach((element) => {
         if (
           !(element.email.length > 0 && this.mailPattern.test(element.email))
         ) {
           this.displaySnackbar(
-            "Some teaching assistant(s) have invalid email!",
-            "error"
-          );
-          return false;
+            'Some teaching assistant(s) have invalid email!',
+            'error'
+          )
+          return false
         }
-      });
-      return true;
+      })
+      return true
     },
-    saveCourse() {
+    saveCourse () {
       if (this.courseDetailsValidation() && this.taDetailsValidation()) {
         const TAsEmails = this.TAs.map((ta) => {
-          return ta.email;
-        });
-        this.$store.dispatch("teacherStore/updateCourse", {
-          token: this.$auth.getToken("local"),
-          id : this.$route.params.id,
+          return ta.email
+        })
+        this.$store.dispatch('teacherStore/updateCourse', {
+          token: this.$auth.getToken('local'),
+          id: this.$route.params.id,
           data: {
             name: this.name,
             code: this.code,
-            ta: TAsEmails,
-          },
-        });
+            ta: TAsEmails
+          }
+        })
       }
-    },
-  },
-};
+    }
+  }
+}
 </script>
 <style lang="scss" scoped>
 </style>

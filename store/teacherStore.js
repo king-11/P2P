@@ -9,87 +9,82 @@ export const mutations = {
 
 export const actions = {
 
- createCourse ({ commit }, payload) {
-
+  createCourse ({ commit }, payload) {
     const header = {
       headers: {
         Authorization: payload.token
       }
     }
-   axios.post(`${BASE_URL}/teacher/course/`,payload.data ,header )
-    .then(data => {
+    axios.post(`${BASE_URL}/teacher/course/`, payload.data, header)
+      .then((data) => {
         this.$router.push('/courses')
         commit('authStore/snackbar', {
-            show: true,
-            color: "green",
-            message: "Course created Succesfully !"
-        },{ root: true })
-    }).catch( err => {
-      let msg = err.message
-      if(err.message == 'Request failed with status code 400'){
+          show: true,
+          color: 'green',
+          message: 'Course created Succesfully !'
+        }, { root: true })
+      }).catch((err) => {
+        let msg = err.message
+        if (err.message === 'Request failed with status code 400') {
           msg = 'A course with this code already Exists ! Please choose other code'
-      }
+        }
         commit('authStore/snackbar', {
-            show: true,
-            color: "red",
-            message: msg
-        },{ root: true })
-    })
+          show: true,
+          color: 'red',
+          message: msg
+        }, { root: true })
+      })
   },
 
   deleteCourse ({ commit }, payload) {
-
     const header = {
       headers: {
         Authorization: payload.token
       }
     }
-   axios.delete(`${BASE_URL}/teacher/course/${payload.id}`,header )
-    .then(data => {
+    axios.delete(`${BASE_URL}/teacher/course/${payload.id}`, header)
+      .then((data) => {
         this.$router.push('/courses')
         commit('authStore/snackbar', {
-            show: true,
-            color: "green",
-            message: "Course deleted Succesfully !"
-        },{ root: true })
-    }).catch( err => {
-  
+          show: true,
+          color: 'green',
+          message: 'Course deleted Succesfully !'
+        }, { root: true })
+      }).catch((err) => {
         commit('authStore/snackbar', {
-            show: true,
-            color: "red",
-            message: err.message
-        },{ root: true })
-    })
+          show: true,
+          color: 'red',
+          message: err.message
+        }, { root: true })
+      })
   },
 
   updateCourse ({ commit }, payload) {
-    
     const header = {
       headers: {
         Authorization: payload.token
       }
     }
-   axios.put(`${BASE_URL}/teacher/course/${payload.id}`,payload.data ,header )
-    .then(data => {
+    axios.put(`${BASE_URL}/teacher/course/${payload.id}`, payload.data, header)
+      .then((data) => {
         this.$router.push(`/courses/${payload.id}`)
         commit('authStore/snackbar', {
-            show: true,
-            color: "green",
-            message: "Course updated Succesfully !"
-        },{ root: true })
-    }).catch( err => {
-      let msg = err.message
-      if(err.message == 'Request failed with status code 400'){
+          show: true,
+          color: 'green',
+          message: 'Course updated Succesfully !'
+        }, { root: true })
+      }).catch((err) => {
+        let msg = err.message
+        if (err.message === 'Request failed with status code 400') {
           msg = 'A course with this code already Exists ! Please choose other code'
-      }
+        }
         commit('authStore/snackbar', {
-            show: true,
-            color: "red",
-            message: msg
-        },{ root: true })
-    })
-  },
-
+          show: true,
+          color: 'red',
+          message: msg
+        }, { root: true })
+      })
+  }
 
 }
 

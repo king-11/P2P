@@ -23,7 +23,7 @@
           <v-card-title class="white--text">
             <span class="headline">{{ course.name }}</span>
 
-            <v-spacer></v-spacer>
+            <v-spacer />
 
             <v-menu bottom left :close-on-content-click="false">
               <template v-slot:activator="{ on: menu, attrs }">
@@ -35,7 +35,9 @@
                       v-bind="attrs"
                       v-on="{ ...tooltip, ...menu }"
                     >
-                      <v-icon large>mdi-dots-vertical</v-icon>
+                      <v-icon large>
+                        mdi-dots-vertical
+                      </v-icon>
                     </v-btn>
                   </template>
                   <span>More Info</span>
@@ -49,14 +51,18 @@
                     </template>
                     <v-list>
                       <v-list-item>
-                        <v-list-item-title>{{
-                          instructor.first_name
-                        }}</v-list-item-title>
+                        <v-list-item-title>
+                          {{
+                            instructor.first_name
+                          }}
+                        </v-list-item-title>
                       </v-list-item>
                       <v-list-item>
-                        <v-list-item-title>{{
-                          instructor.email
-                        }}</v-list-item-title>
+                        <v-list-item-title>
+                          {{
+                            instructor.email
+                          }}
+                        </v-list-item-title>
                       </v-list-item>
                     </v-list>
                   </v-list-group>
@@ -75,8 +81,8 @@
                       <v-icon>mdi-barcode-scan</v-icon>
                     </v-list-item-icon>
 
-                    <v-list-item-title
-                      >ClassCode
+                    <v-list-item-title>
+                      ClassCode
                       <v-chip
                         class="ml-2 font-weight-bold"
                         color="white black--text"
@@ -91,8 +97,8 @@
                       <v-icon>mdi-account-group</v-icon>
                     </v-list-item-icon>
 
-                    <v-list-item-title
-                      >Total Students - {{ course.totalStudents }}
+                    <v-list-item-title>
+                      Total Students - {{ course.totalStudents }}
                     </v-list-item-title>
                   </v-list-item>
                 </v-list>
@@ -112,36 +118,38 @@
       </v-col>
     </v-row>
     <v-container>
-    <div
-      v-for="(assg, i) in assignments"
-      :key="i"
-    >
-      <v-row style="margin-top: 4vh">
-        <v-col cols="12" lg="10" md="11" style="margin: auto; padding: 0">
-          <v-card>
-            <v-row>
-              <v-col cols="1" class="hidden-xs-only">
-                <v-img
-                  src="https://static.thenounproject.com/png/2038384-200.png"
-                  max-height="50"
-                  max-width="50"
-                  class="img"
-                />
-              </v-col>
-              <v-col cols="11" class="hidden-xs-only">
-                <v-card-title>{{ assg.title }}</v-card-title>
-              </v-col>
-              <v-col class="d-sm-none">
-                <h4 style="margin-left: 17px">{{ assg.title }}</h4>
-              </v-col>
-            </v-row>
-          </v-card>
-        </v-col>
-      </v-row>
-    </div>
+      <div
+        v-for="(assg, i) in assignments"
+        :key="i"
+      >
+        <v-row style="margin-top: 4vh">
+          <v-col cols="12" lg="10" md="11" style="margin: auto; padding: 0">
+            <v-card>
+              <v-row>
+                <v-col cols="1" class="hidden-xs-only">
+                  <v-img
+                    src="https://static.thenounproject.com/png/2038384-200.png"
+                    max-height="50"
+                    max-width="50"
+                    class="img"
+                  />
+                </v-col>
+                <v-col cols="11" class="hidden-xs-only">
+                  <v-card-title>{{ assg.title }}</v-card-title>
+                </v-col>
+                <v-col class="d-sm-none">
+                  <h4 style="margin-left: 17px">
+                    {{ assg.title }}
+                  </h4>
+                </v-col>
+              </v-row>
+            </v-card>
+          </v-col>
+        </v-row>
+      </div>
     </v-container>
-    <div  v-if="!noAssg" class="text-xs-center mt-3 ml-10">
-        No assignments in this course yet ! 
+    <div v-if="!noAssg" class="text-xs-center mt-3 ml-10">
+      No assignments in this course yet !
     </div>
     <v-speed-dial
       v-if="teacher"
@@ -200,10 +208,10 @@
     <v-dialog v-model="deleteConfirm" max-width="290">
       <v-card>
         <v-card-title class="headline">
-          Confirm 
+          Confirm
         </v-card-title>
         <v-card-text>
-          Are you sure to delete this course ?  All the assignments related to this course will also be deleted automatically . 
+          Are you sure to delete this course ?  All the assignments related to this course will also be deleted automatically .
         </v-card-text>
         <v-card-actions>
           <v-btn color="red darken-1" text @click="deleteConfirm = false">
@@ -220,59 +228,60 @@
 </template>
 <script>
 export default {
-  middleware: ["auth"],
-  async fetch() {
+  middleware: ['auth'],
+  async fetch () {
     const header = {
       headers: {
-        Authorization: this.$auth.getToken("local"),
-      },
-    };
-    let course = await this.$axios.$get(
+        Authorization: this.$auth.getToken('local')
+      }
+    }
+    const course = await this.$axios.$get(
       `https://arcane-mountain-95630.herokuapp.com/teacher/course/${this.$route.params.id}`,
       header
-    );
-    console.log(course);
-    this.course = course;
-    this.instructor = course.instructor;
+    )
+    console.log(course)
+    this.course = course
+    this.instructor = course.instructor
   },
   data: () => ({
-    deleteConfirm : false ,
-    fab : false,
+    deleteConfirm: false,
+    fab: false,
     course: {},
     instructor: {},
-    assignments : [
-        {
-            title:'Assignment1',
-        },
-         {
-            title:'Assignment2',
-        },
-         {
-            title:'Assignment3',
-        }
-    ],
-    buttonMessageT: "Delete Course",
-    buttonMessageS: "Leave Course",
-  }),
-  computed : {
-      noAssg(){
-          return this.assignments.length
+    assignments: [
+      {
+        title: 'Assignment1'
       },
-      teacher(){
-         return this.$auth.user.data.teacher
+      {
+        title: 'Assignment2'
+      },
+      {
+        title: 'Assignment3'
       }
-  },
-  methods : {
-    dialog (){
-      this.deleteConfirm = true 
+    ],
+    buttonMessageT: 'Delete Course',
+    buttonMessageS: 'Leave Course'
+  }),
+  computed: {
+    noAssg () {
+      return this.assignments.length
     },
-    deleteCourse (){
-       this.$store.dispatch('teacherStore/deleteCourse',{
-         token : this.$auth.getToken("local"),
-         id : this.$route.params.id })
+    teacher () {
+      return this.$auth.user.data.teacher
+    }
+  },
+  methods: {
+    dialog () {
+      this.deleteConfirm = true
+    },
+    deleteCourse () {
+      this.$store.dispatch('teacherStore/deleteCourse', {
+        token: this.$auth.getToken('local'),
+        id: this.$route.params.id
+      })
     }
   }
-};
+}
 </script>
 <style scoped>
 .fab {
