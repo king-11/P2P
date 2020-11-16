@@ -115,7 +115,7 @@ export default {
       `https://arcane-mountain-95630.herokuapp.com/teacher/course/${this.$route.params.id}`,
       header
     )
-    console.log(course)
+    // console.log(course)
     this.course = course
     this.name = course.name
     this.code = course.code
@@ -190,7 +190,7 @@ export default {
       return true
     },
     taDetailsValidation () {
-      console.log(this.TAs)
+      // console.log(this.TAs)
       this.TAs.forEach((element) => {
         if (
           !(element.email.length > 0 && this.mailPattern.test(element.email))

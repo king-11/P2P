@@ -117,7 +117,7 @@ export default {
       return e
     })
     this.courses = courses
-    console.log(courses)
+    // console.log(courses)
   },
   data () {
     return {
