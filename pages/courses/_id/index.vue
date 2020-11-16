@@ -113,7 +113,7 @@
     </v-row>
     <v-container>
     <div
-      v-for="(assg, i) in assignments"
+      v-for="(assg, i) in course.assignments"
       :key="i"
     >
       <v-row style="margin-top: 4vh">
@@ -140,7 +140,7 @@
       </v-row>
     </div>
     </v-container>
-    <div  v-if="!noAssg" class="text-xs-center mt-3 ml-10">
+    <div  v-if="false" class="text-xs-center mt-3 ml-10">
         No assignments in this course yet ! 
     </div>
     <v-speed-dial
@@ -183,7 +183,7 @@
         dark
         small
         color="indigo"
-        to="/createassignment"
+        :to="'/courses/'+ this.$route.params.id + '/createassignment'"
       >
         <v-icon>mdi-plus</v-icon>
       </v-btn>
@@ -241,23 +241,11 @@ export default {
     course: {},
     instructor: {},
     assignments : [
-        {
-            title:'Assignment1',
-        },
-         {
-            title:'Assignment2',
-        },
-         {
-            title:'Assignment3',
-        }
     ],
     buttonMessageT: "Delete Course",
     buttonMessageS: "Leave Course",
   }),
   computed : {
-      noAssg(){
-          return this.assignments.length
-      },
       teacher(){
          return this.$auth.user.data.teacher
       }
