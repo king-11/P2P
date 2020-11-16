@@ -41,12 +41,17 @@
     </v-navigation-drawer>
     <v-app-bar light elevate-on-scroll app>
       <v-app-bar-nav-icon v-if="isSignIn" x-large class="black--text text--darken-5" @click="navbar = !navbar" />
-      <v-toolbar-title class="text-uppercase" to="/">
+      <v-toolbar-title class="text-uppercase d-flex " to="/">
         <div style="display:inline-block;transform: rotateY(180deg)">
           P
         </div>2P
       </v-toolbar-title>
       <v-spacer />
+      <v-btn class="ml-auto" depressed href="https://github.com/king-11/P2P">
+        <v-icon large>
+          mdi-github
+        </v-icon>
+      </v-btn>
       <v-btn v-if="isSignIn" outlined class="black white--text" to="/" @click="SignOut">
         Sign Out
       </v-btn>

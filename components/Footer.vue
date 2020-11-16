@@ -1,8 +1,11 @@
 <template>
-  <v-footer light padless>
-    <v-row>
+  <v-footer light>
+    <v-row justify="space-between">
       <v-col class="text-center  grey--text">
-        &copy; {{ new Date().getFullYear() }} — <strong>Knightmode</strong>
+        &copy;2020 - {{ new Date().getFullYear() }} <strong>Knightmode</strong>
+      </v-col>
+      <v-col class="text-center">
+        P2P is made with 🍕, ☕ and 💻 ✨
       </v-col>
     </v-row>
   </v-footer>
