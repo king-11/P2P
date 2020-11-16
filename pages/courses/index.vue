@@ -117,6 +117,7 @@ export default {
       return e
     })
     this.courses = courses
+    console.log(courses)
   },
   data () {
     return {
@@ -125,11 +126,11 @@ export default {
         {
           text: 'Name',
           align: 'start',
-          sortable: false,
-          value: 'name'
+          sortable: true,
+          value: 'title'
         },
-        { text: 'Last Date', value: 'lastDate' },
-        { text: 'No of submissions', value: 'nfs' }
+        { text: 'Last Date', value: 'submissionDeadline' },
+        { text: 'No of submissions', value: 'number_of_submissions' }
       ],
       courses: [],
       isTeacher: this.$auth.user.data.teacher

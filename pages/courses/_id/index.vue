@@ -118,6 +118,7 @@
       </v-col>
     </v-row>
     <v-container>
+<<<<<<< HEAD
       <div
         v-for="(assg, i) in assignments"
         :key="i"
@@ -150,6 +151,38 @@
     </v-container>
     <div v-if="!noAssg" class="text-xs-center mt-3 ml-10">
       No assignments in this course yet !
+=======
+    <div
+      v-for="(assg, i) in course.assignments"
+      :key="i"
+    >
+      <v-row style="margin-top: 4vh">
+        <v-col cols="12" lg="10" md="11" style="margin: auto; padding: 0">
+          <v-card>
+            <v-row>
+              <v-col cols="1" class="hidden-xs-only">
+                <v-img
+                  src="https://static.thenounproject.com/png/2038384-200.png"
+                  max-height="50"
+                  max-width="50"
+                  class="img"
+                />
+              </v-col>
+              <v-col cols="11" class="hidden-xs-only">
+                <v-card-title>{{ assg.title }}</v-card-title>
+              </v-col>
+              <v-col class="d-sm-none">
+                <h4 style="margin-left: 17px">{{ assg.title }}</h4>
+              </v-col>
+            </v-row>
+          </v-card>
+        </v-col>
+      </v-row>
+    </div>
+    </v-container>
+    <div  v-if="false" class="text-xs-center mt-3 ml-10">
+        No assignments in this course yet ! 
+>>>>>>> create assignment endpoint connected
     </div>
     <v-speed-dial
       v-if="teacher"
@@ -191,7 +224,7 @@
         dark
         small
         color="indigo"
-        to="/createassignment"
+        :to="'/courses/'+ this.$route.params.id + '/createassignment'"
       >
         <v-icon>mdi-plus</v-icon>
       </v-btn>
@@ -248,6 +281,7 @@ export default {
     fab: false,
     course: {},
     instructor: {},
+<<<<<<< HEAD
     assignments: [
       {
         title: 'Assignment1'
@@ -257,6 +291,16 @@ export default {
       },
       {
         title: 'Assignment3'
+=======
+    assignments : [
+    ],
+    buttonMessageT: "Delete Course",
+    buttonMessageS: "Leave Course",
+  }),
+  computed : {
+      teacher(){
+         return this.$auth.user.data.teacher
+>>>>>>> create assignment endpoint connected
       }
     ],
     buttonMessageT: 'Delete Course',

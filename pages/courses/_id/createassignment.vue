@@ -25,7 +25,7 @@
                   <v-text-field
                     v-model.number="weightage"
                     :rules="[rules.weightageRule]"
-                    label="Task weightage"
+                    label="weightage"
                     :outlined="breakpoint"
                     required
                   />
@@ -54,6 +54,13 @@
                   />
                 </v-col>
               </v-row>
+              <v-file-input
+                v-model="files"
+                chips
+                multiple
+                accept="image/*"
+                label="File input"
+              />
             </v-form>
           </v-card-text>
           <v-divider />
@@ -97,6 +104,7 @@ export default {
   },
   data () {
     return {
+      files: [],
       weightage: 0,
       snackbar: false,
       snackbarColor: 'error',
@@ -162,7 +170,22 @@ export default {
         this.displaySnackbar('Review period to short or negative!', 'error')
         return
       }
-      this.displaySnackbar('Ready to save!', 'success')
+      if (this.weightage === '') {
+        this.displaySnackbar('Invalid Weightage', 'error')
+        return
+      }
+      this.$store.dispatch('assignmentStore/createAssignment', {
+        token: this.$auth.getToken('local'),
+        id: this.$route.params.id,
+        data: {
+          title: this.title,
+          description: this.description,
+          totalPoints: this.weightage,
+          submissionDeadline: this.submissionDeadline,
+          reviewDeadline: this.reviewDeadline,
+          attachments: this.files
+        }
+      })
     }
   }
 }
