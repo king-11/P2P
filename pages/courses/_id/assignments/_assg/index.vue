@@ -49,6 +49,8 @@
       :v-model="fab"
       bottom
       right
+      absolute
+      fixed
       direction="top"
       open-on-hover
       transition="slide-y-reverse-transition"
@@ -118,6 +120,8 @@ export default {
       header
     )
     this.assignment = assignment
+    assignment.submissionDeadline = new Date(assignment.submissionDeadline).toLocaleString(['en-US'], { month: 'short', day: '2-digit', year: 'numeric' })
+    assignment.reviewDeadline = new Date(assignment.reviewDeadline).toLocaleString(['en-US'], { month: 'short', day: '2-digit', year: 'numeric' })
   },
   data: () => ({
     assignment: {},

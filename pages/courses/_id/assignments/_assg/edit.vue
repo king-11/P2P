@@ -4,7 +4,7 @@
       <v-col cols="12" md="10" xl="8">
         <v-card elevation="2">
           <v-card-title class="info--text">
-            Create Assignment
+            Update Assignment
           </v-card-title>
           <v-divider />
           <v-card-text justify="center">
@@ -54,12 +54,33 @@
                   />
                 </v-col>
               </v-row>
+              <v-card-subtitle>Provided Refrence material</v-card-subtitle>
+              <v-combobox
+                v-model="links"
+                chips
+                clearable
+                multiple
+                solo
+              >
+                <template v-slot:selection="{ attrs, item, select, selected }">
+                  <v-chip
+                    v-bind="attrs"
+                    :href="item"
+                    target="_blank"
+                    :input-value="selected"
+                    close
+                    @click="select"
+                    @click:close="remove(item)"
+                  >
+                    <strong>link</strong>&nbsp;
+                  </v-chip>
+                </template>
+              </v-combobox>
               <v-file-input
                 v-model="files"
                 chips
                 multiple
-                accept="image/*"
-                label="File input"
+                label="Reference material"
               />
             </v-form>
           </v-card-text>
@@ -113,11 +134,18 @@ export default {
       header
     )
     this.assignment = assignment
+    this.weightage = assignment.totalPoints
+    this.title = assignment.title
+    this.submissionDeadline = new Date(assignment.submissionDeadline)
+    this.reviewDeadline = new Date(assignment.reviewDeadline)
+    this.description = assignment.description
+    this.links = assignment.attachments
   },
   data () {
     return {
       assignment: {},
       files: [],
+      links: [],
       weightage: 0,
       snackbar: false,
       snackbarColor: 'error',
@@ -129,9 +157,9 @@ export default {
       title: '',
       description: '',
       // last date of submission(begining of review)
-      submissionDeadline: new Date().toISOString().substr(0, 10),
+      submissionDeadline: null,
       // last date of review
-      reviewDeadline: new Date().toISOString().substr(0, 10),
+      reviewDeadline: null,
       multipleFiles: false,
       rules: {
         titleLength: value => value.length <= 100 || 'Max 50 characters.',
@@ -187,9 +215,11 @@ export default {
         this.displaySnackbar('Invalid Weightage', 'error')
         return
       }
-      this.$store.dispatch('assignmentStore/createAssignment', {
+      this.$store.dispatch('assignmentStore/updateAssignment', {
         token: this.$auth.getToken('local'),
         id: this.$route.params.id,
+        assg_id: this.$route.params.assg,
+        links: this.links,
         data: {
           title: this.title,
           description: this.description,
@@ -199,6 +229,10 @@ export default {
           attachments: this.files
         }
       })
+    },
+    remove (item) {
+      this.links.splice(this.links.indexOf(item), 1)
+      this.links = [...this.links]
     }
   }
 }

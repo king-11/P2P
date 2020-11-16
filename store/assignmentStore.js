@@ -87,6 +87,61 @@ export const actions = {
           message: err.message
         }, { root: true })
       })
+  },
+  updateAssignment ({ commit }, payload) {
+    const header = {
+      params: { courseId: payload.id },
+      headers: {
+        Authorization: payload.token
+      }
+    }
+    const files = payload.data.attachments
+    const urls = []
+    if (files.length > 0) {
+      files.forEach((file) => {
+        firebase.storage().ref('attachments/' + file.name).put(file)
+          .then(async (fileData) => {
+            const imageUrl = await firebase.storage().ref('attachments').child(fileData.metadata.name).getDownloadURL()
+            urls.push(imageUrl)
+            if (urls.length === files.length) {
+              payload.data.attachments = urls
+              payload.data.attachments = payload.data.attachments.concat(payload.links)
+              axios.put(`${BASE_URL}/assignment/${payload.assg_id}`, payload.data, header)
+                .then((data) => {
+                  this.$router.push(`/courses/${payload.id}/assignments/${payload.assg_id}`)
+                  commit('authStore/snackbar', {
+                    show: true,
+                    color: 'green',
+                    message: 'Assignment updated Succesfully !'
+                  }, { root: true })
+                }).catch((err) => {
+                  commit('authStore/snackbar', {
+                    show: true,
+                    color: 'red',
+                    message: err.message
+                  }, { root: true })
+                })
+            }
+          })
+      })
+    } else {
+      payload.data.attachments.concat(payload.links)
+      axios.put(`${BASE_URL}/assignment/${payload.assg_id}`, payload.data, header)
+        .then((data) => {
+          this.$router.push(`/courses/${payload.id}/assignments/${payload.assg_id}`)
+          commit('authStore/snackbar', {
+            show: true,
+            color: 'green',
+            message: 'Assignment updated Succesfully !'
+          }, { root: true })
+        }).catch((err) => {
+          commit('authStore/snackbar', {
+            show: true,
+            color: 'red',
+            message: err.message
+          }, { root: true })
+        })
+    }
   }
 }
 

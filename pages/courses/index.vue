@@ -45,6 +45,7 @@
                   dark
                   color="black"
                   v-bind="attrs"
+                  :to="'/courses/'+course._id+'/edit'"
                   v-on="on"
                 >
                   <v-icon dark>
@@ -117,7 +118,6 @@ export default {
       return e
     })
     this.courses = courses
-    // console.log(courses)
   },
   data () {
     return {
@@ -139,6 +139,11 @@ export default {
   methods: {
     //  switch expandable
     view (course) {
+      const assg = course.assignments
+      assg.forEach((a) => {
+        a.submissionDeadline = new Date(a.submissionDeadline).toLocaleString(['en-US'], { month: 'short', day: '2-digit', year: 'numeric' })
+        a.reviewDeadline = new Date(a.reviewDeadline).toLocaleString(['en-US'], { month: 'short', day: '2-digit', year: 'numeric' })
+      })
       course.show = !course.show
     }
   }

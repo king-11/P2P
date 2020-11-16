@@ -58,8 +58,7 @@
                 v-model="files"
                 chips
                 multiple
-                accept="image/*"
-                label="File input"
+                label="Reference material"
               />
             </v-form>
           </v-card-text>
@@ -75,7 +74,7 @@
               >
                 <v-icon>mdi-content-save</v-icon>Save
               </v-btn>
-              <v-btn color="error" text dense>
+              <v-btn color="error" :to="'/courses/'+this.$route.params.id" text dense>
                 <v-icon>mdi-alert-circle-outline</v-icon>Discard
               </v-btn>
             </v-row>
@@ -174,6 +173,8 @@ export default {
         this.displaySnackbar('Invalid Weightage', 'error')
         return
       }
+      // this.submissionDeadline = new Date(this.submissionDeadline).toLocaleString(['en-US'], { month: 'short', day: '2-digit', year: 'numeric' })
+      // this.reviewDeadline = new Date(this.submissionDeadline).toLocaleString(['en-US'], { month: 'short', day: '2-digit', year: 'numeric' })
       this.$store.dispatch('assignmentStore/createAssignment', {
         token: this.$auth.getToken('local'),
         id: this.$route.params.id,
