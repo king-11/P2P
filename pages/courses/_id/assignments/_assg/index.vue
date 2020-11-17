@@ -9,10 +9,31 @@
         </v-chip>
       </v-card-title>
       <v-card-subtitle>
-        Due {{ assignment.submissionDeadline }}
+        <div>
+          <v-chip
+            class="ma-2"
+            color="white"
+            outlined
+          >
+            <v-icon left>
+              mdi-clock-outline
+            </v-icon>
+            Submission Deadline {{ assignment.submissionDeadline }}
+          </v-chip>
+        </div>
+        <v-chip
+          class="ma-2"
+          color="white"
+          outlined
+        >
+          <v-icon left>
+            mdi-clock-outline
+          </v-icon>
+          Review Deadline {{ assignment.reviewDeadline }}
+        </v-chip>
       </v-card-subtitle>
       <v-card-text class="mt-5 white--text">
-        <h3>Description :</h3>
+        <h3>Instructions :</h3>
         <v-card-text>
           {{ assignment.description }}
         </v-card-text>
@@ -43,7 +64,7 @@
               >
                 Your Submission
               </v-chip>
-              submitted At : {{ new Date(submission.updatedAt).toLocaleString(['en-US'], { month: 'short', day: '2-digit', year: 'numeric' }) }}
+              submitted at : {{ new Date(submission.updatedAt).toLocaleString(['en-US'], { month: 'short', day: '2-digit', year: 'numeric' }) }}
             </v-card-subtitle>
             <v-file-input
               v-else
@@ -88,6 +109,9 @@
           @click="deleteSubmission"
         >
           Delete
+        </v-btn>
+        <v-btn class="ma-2" color="white black--text" :to="this.$route.fullPath + '/allSubmissions'">
+          Start Reviewing
         </v-btn>
       </v-card-actions>
     </v-card>

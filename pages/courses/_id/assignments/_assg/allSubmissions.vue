@@ -7,14 +7,17 @@
       <template v-slot:default>
         <thead>
           <tr>
-            <th class="text-left">
+            <th v-if="teacher" class="text-left">
               Submitted by
             </th>
-            <th class="text-left">
+            <th v-if="teacher" class="text-left">
               Submitted At
             </th>
             <th class="text-left">
               Attachment
+            </th>
+            <th v-if="!teacher" class="text-left">
+              no of reviews
             </th>
           </tr>
         </thead>
@@ -23,8 +26,12 @@
             v-for="item in submissions"
             :key="item.name"
           >
-            <td>{{ item.submitter.first_name }}</td>
-            <td>{{ new Date(item.updatedAt).toLocaleString(['en-US'], { month: 'short', day: '2-digit', year: 'numeric' }) }}</td>
+            <td v-if="teacher">
+              {{ item.submitter.first_name }}
+            </td>
+            <td v-if="teacher">
+              {{ new Date(item.updatedAt).toLocaleString(['en-US'], { month: 'short', day: '2-digit', year: 'numeric' }) }}
+            </td>
             <td>
               <v-chip
                 class="ma-1"
@@ -34,6 +41,14 @@
               >
                 attachment
               </v-chip>
+            </td>
+            <td v-if="!teacher">
+              {{ item.number_of_reviews }}
+            </td>
+            <td v-if="!teacher">
+              <v-btn class="ma-2" small color="white black--text" :to="'/courses/'+$route.params.id+'/assignments/'+$route.params.assg+'/review/'+item._id">
+                Review
+              </v-btn>
             </td>
           </tr>
         </tbody>
@@ -74,6 +89,9 @@ export default {
   computed: {
     sub () {
       return this.submissions
+    },
+    teacher () {
+      return !this.$auth.user.data.teacher
     }
   },
   method: {
