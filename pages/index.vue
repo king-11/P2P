@@ -144,7 +144,7 @@ export default {
   data () {
     return {
       imgSrc: require('../assets/images/study.webp'),
-      background: require('../assets/images/background.jpg'),
+      background: require('../assets/images/background.webp'),
       student: require('../assets/images/student.jpg')
     }
   },
