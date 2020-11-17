@@ -71,7 +71,9 @@ export default {
           login: { url: 'auth/signin', method: 'post', propertyName: 'token' },
           user: { url: 'user/', method: 'get', propertyName: false },
           logout: false
-        }
+        },
+        tokenRequired: true,
+        tokenType: 'Bearer'
       }
     },
     redirect: {
