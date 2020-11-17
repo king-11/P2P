@@ -28,7 +28,10 @@
       </div>
     </v-lazy>
     <v-container>
-      <v-timeline>
+      <v-timeline
+        dark
+        align-top
+      >
         <v-timeline-item
           v-for="(content, i) in process"
           :key="i"
@@ -36,10 +39,10 @@
           small
         >
           <div class="py-4">
-            <h2 :class="`headline font-weight-light mb-4 ${content.color}--text`">
+            <h2 :class="`text-h6 font-weight-light mb-4 ${content.color}--text`">
               {{ content.title }}
             </h2>
-            <div>
+            <div class="text-body-1">
               {{ content.body }}
             </div>
           </div>
