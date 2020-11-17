@@ -173,8 +173,6 @@ export default {
         this.displaySnackbar('Invalid Weightage', 'error')
         return
       }
-      // this.submissionDeadline = new Date(this.submissionDeadline).toLocaleString(['en-US'], { month: 'short', day: '2-digit', year: 'numeric' })
-      // this.reviewDeadline = new Date(this.submissionDeadline).toLocaleString(['en-US'], { month: 'short', day: '2-digit', year: 'numeric' })
       this.$store.dispatch('assignmentStore/createAssignment', {
         token: this.$auth.getToken('local'),
         id: this.$route.params.id,
