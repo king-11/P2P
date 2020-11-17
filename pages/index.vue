@@ -17,17 +17,46 @@
         </v-col>
       </v-row>
     </v-parallax>
+    <v-lazy
+      :options="{
+        threshold: .6
+      }"
+      transition="scale-transition"
+    >
+      <div class="mt-5 text-h4 text-md-h3 white--text text-center">
+        How Does it Work ?
+      </div>
+    </v-lazy>
     <v-container>
-      <v-lazy
-        :options="{
-          threshold: .6
-        }"
-        transition="scroll-y-transition"
-      >
-        <div class="mt-5 text-h4 text-md-h3 white--text text-center">
-          Build on academic research
-        </div>
-      </v-lazy>
+      <v-timeline>
+        <v-timeline-item
+          v-for="(content, i) in process"
+          :key="i"
+          :color="content.color"
+          small
+        >
+          <div class="py-4">
+            <h2 :class="`headline font-weight-light mb-4 ${content.color}--text`">
+              {{ content.title }}
+            </h2>
+            <div>
+              {{ content.body }}
+            </div>
+          </div>
+        </v-timeline-item>
+      </v-timeline>
+    </v-container>
+    <v-lazy
+      :options="{
+        threshold: .6
+      }"
+      transition="scroll-y-transition"
+    >
+      <div class="mt-5 text-h4 text-md-h3 white--text text-center">
+        Build on academic research
+      </div>
+    </v-lazy>
+    <v-container>
       <v-row align="center" justify="center" class="my-10">
         <v-col cols="12" sm="12" md="5">
           <span class="text-body-1">
@@ -44,22 +73,23 @@
           />
         </v-col>
       </v-row>
-      <v-lazy
-        :options="{
-          threshold: .6
-        }"
-        transition="scale-transition"
-      >
-        <div class="mt-5 text-h4 text-md-h3 white--text text-center">
-          What people are saying ?
-        </div>
-      </v-lazy>
-
+    </v-container>
+    <v-lazy
+      :options="{
+        threshold: .6
+      }"
+      transition="scale-transition"
+    >
+      <div class="mt-5 text-h4 text-md-h3 white--text text-center">
+        What people are saying ?
+      </div>
+    </v-lazy>
+    <v-container>
       <v-carousel
         class="mp-5"
         hide-delimiters="true"
         show-arrows-on-hover="true"
-        height="350"
+        height="400"
       >
         <v-carousel-item
           v-for="(review, i) in reviews"
@@ -70,7 +100,7 @@
               <v-card
                 color="pink"
                 dark
-                max-width="400"
+                max-width="420"
                 max-height="300"
               >
                 <div class="d-flex flex-no-wrap justify-space-between fill-height align-center">
@@ -103,9 +133,13 @@
 <script>
 export default {
   async asyncData ({ $content }) {
-    const { data } = await $content('reviews').only(['data']).fetch()
+    const [reviewData, processData] = await Promise.all([
+      $content('reviews').only(['data']).fetch(),
+      $content('process').only(['data']).fetch()
+    ])
     return {
-      reviews: data
+      reviews: reviewData.data,
+      process: processData.data
     }
   },
   data () {

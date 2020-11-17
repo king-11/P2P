@@ -1,0 +1,34 @@
+{
+  "data": [
+    {
+      "title": "The teacher creates a course",
+      "body": "Teacher creates a course and receives a special unique code for distributing to students",
+      "color": "cyan"
+    },
+    {
+      "title": "Students Register for course",
+      "body": "Student register for course using the unique code provided by teacher",
+      "color": "green"
+    },
+    {
+      "title": "The teacher sets up an assignment",
+      "body": "You start process by setting up your assignment. You pick a feedback rubric from our library or create your own, select an assignment template and you're ready to get started.",
+      "color": "pink"
+    },
+    {
+      "title": "Students submit their work",
+      "body": "Students submit their work to your assignment. They can submit anything – text, files, videos, links and even Google docs!",
+      "color": "amber"
+    },
+    {
+      "title": "Students review each other",
+      "body": "Your students give each other anonymous feedback through your rubric.",
+      "color": "orange"
+    },
+    {
+      "title": "The teacher has a complete overview",
+      "body": "You get the complete overview of everything that is happening in the assignment.",
+      "color": "teal"
+    }
+  ]
+}
