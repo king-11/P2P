@@ -57,9 +57,6 @@
             <v-btn v-if="!submitted" color="white black--text" @click="submitAssignment">
               submit
             </v-btn>
-            <v-btn v-else color="white black--text" @click.stop="dialog = true">
-              updated
-            </v-btn>
           </v-col>
         </v-row>
       </v-card-text>
@@ -80,8 +77,21 @@
           View Reviews
         </v-btn>
       </v-card-actions>
+      <v-card-actions v-if="(!teacher)&submitted">
+        <v-spacer />
+        <v-btn class="ma-2" color="white black--text" @click.stop="updateDialog = true">
+          Updated
+        </v-btn>
+        <v-btn
+          color="white black--text"
+          class="ma-2"
+          @click="deleteSubmission"
+        >
+          Delete
+        </v-btn>
+      </v-card-actions>
     </v-card>
-    <v-dialog v-model="dialog" overlay-color="white" max-width="390">
+    <v-dialog v-model="updateDialog" overlay-color="white" max-width="390">
       <v-card>
         <v-card-title class="headline">
           Update Submission
@@ -98,7 +108,7 @@
           />
         </v-card-text>
         <v-card-actions>
-          <v-btn color="white" text @click="dialog = false">
+          <v-btn color="white" text @click="updateDialog = false">
             Cancel
           </v-btn>
           <v-spacer />
@@ -189,7 +199,7 @@ export default {
     this.assignment.reviewDeadline = new Date(this.assignment.reviewDeadline).toLocaleString(['en-US'], { month: 'short', day: '2-digit', year: 'numeric' })
   },
   data: () => ({
-    dialog: false,
+    updateDialog: false,
     submission: {},
     submitted: false,
     assignment: {},
@@ -252,6 +262,16 @@ export default {
           message: 'Please upload file to submit'
         })
       }
+    },
+    deleteSubmission () {
+      this.$store.dispatch('submissionStore/deleteSubmission', {
+        token: this.$auth.getToken('local'),
+        course: this.$route.params.id,
+        id: this.submission._id,
+        data: {
+          assignment: this.$route.params.assg
+        }
+      })
     }
   }
 }

@@ -60,7 +60,7 @@ export const actions = {
             commit('authStore/snackbar', {
               show: true,
               color: 'green',
-              message: 'Assignment updated Succesfully !'
+              message: 'Submission updated Succesfully !'
             }, { root: true })
           }).catch((err) => {
             let msg = err.message
@@ -73,6 +73,29 @@ export const actions = {
               message: msg
             }, { root: true })
           })
+      })
+  },
+  // assignment id to be sent
+  deleteSubmission ({ commit }, payload) {
+    const header = {
+      headers: {
+        Authorization: payload.token
+      }
+    }
+    axios.delete(`${BASE_URL}/submission/${payload.id}`, header)
+      .then((data) => {
+        this.$router.push(`/courses/${payload.course}/assignments/${payload.data.assignment}`)
+        commit('authStore/snackbar', {
+          show: true,
+          color: 'green',
+          message: 'Submission updated Succesfully !'
+        }, { root: true })
+      }).catch((err) => {
+        commit('authStore/snackbar', {
+          show: true,
+          color: 'red',
+          message: err.message
+        }, { root: true })
       })
   }
 }
