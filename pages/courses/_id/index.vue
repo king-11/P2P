@@ -124,7 +124,7 @@
       >
         <v-row style="margin-top: 4vh">
           <v-col cols="12" lg="10" md="11" style="margin: auto; padding: 0">
-            <v-card :to="'/courses/'+$route.params.id+'/assignments/'+assg._id">
+            <v-card :to="$route.fullPath+'/assignments/'+assg._id">
               <v-row>
                 <v-col cols="1" class="hidden-xs-only">
                   <v-img
@@ -239,7 +239,6 @@ export default {
       `https://arcane-mountain-95630.herokuapp.com/teacher/course/${this.$route.params.id}`,
       header
     )
-    // console.log(course)
     this.course = course
     this.instructor = course.instructor
   },

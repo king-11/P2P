@@ -125,7 +125,7 @@ export const actions = {
           })
       })
     } else {
-      payload.data.attachments.concat(payload.links)
+      payload.data.attachments = payload.data.attachments.concat(payload.links)
       axios.put(`${BASE_URL}/assignment/${payload.assg_id}`, payload.data, header)
         .then((data) => {
           this.$router.push(`/courses/${payload.id}/assignments/${payload.assg_id}`)

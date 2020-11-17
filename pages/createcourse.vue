@@ -91,6 +91,7 @@
             <v-btn
               color="warning"
               text
+              to="/courses/"
             >
               <v-icon>
                 mdi-arrow-left-circle

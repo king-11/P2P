@@ -8,21 +8,37 @@
         <thead>
           <tr>
             <th class="text-left">
-              Submitted by :
+              Submitted by
+            </th>
+            <th class="text-left">
+              Submitted At
             </th>
             <th class="text-left">
               Attachment
             </th>
           </tr>
         </thead>
-        <tbody>
+        <tbody v-if="sub">
           <tr
             v-for="item in submissions"
             :key="item.name"
           >
-            <td>{{ item.name }}</td>
-            <td>{{ item.attachment }}</td>
+            <td>{{ item.submitter.first_name }}</td>
+            <td>{{ new Date(item.updatedAt).toLocaleString(['en-US'], { month: 'short', day: '2-digit', year: 'numeric' }) }}</td>
+            <td>
+              <v-chip
+                class="ma-1"
+                color="white black--text"
+                :href="item.attachments[0]"
+                target="_blank"
+              >
+                attachment
+              </v-chip>
+            </td>
           </tr>
+        </tbody>
+        <tbody v-else>
+          No submissions yet !
         </tbody>
       </template>
     </v-simple-table>
@@ -53,6 +69,17 @@ export default {
     return {
       submissions: [
       ]
+    }
+  },
+  computed: {
+    sub () {
+      return this.submissions
+    }
+  },
+  method: {
+    formatDate (date) {
+      const formatedDate = new Date(date).toLocaleString(['en-US'], { month: 'short', day: '2-digit', year: 'numeric' })
+      return formatedDate
     }
   }
 }
