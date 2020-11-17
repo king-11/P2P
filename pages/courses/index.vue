@@ -107,12 +107,13 @@
 export default {
   middleware: ['auth'],
   async fetch () {
-    const header = {
-      headers: {
-        Authorization: this.$auth.getToken('local')
-      }
+    let url = 'https://arcane-mountain-95630.herokuapp.com/'
+    if (this.$auth.user.data.teacher) {
+      url += 'teacher/course/'
+    } else {
+      url += 'user/course/'
     }
-    let courses = await this.$axios.$get('https://arcane-mountain-95630.herokuapp.com/teacher/course/', header)
+    let courses = await this.$axios.$get(url)
     courses = courses.map((e) => {
       e.show = false
       return e
@@ -146,6 +147,9 @@ export default {
       })
       course.show = !course.show
     }
+  },
+  head: {
+    title: 'Home'
   }
 }
 </script>
