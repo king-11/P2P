@@ -110,7 +110,7 @@
         >
           Delete
         </v-btn>
-        <v-btn class="ma-2" color="white black--text" :to="this.$route.fullPath + '/allSubmissions'">
+        <v-btn v-if="canReview" class="ma-2" color="white black--text" :to="this.$route.fullPath + '/allSubmissions'">
           Start Reviewing
         </v-btn>
       </v-card-actions>
@@ -219,10 +219,14 @@ export default {
       this.link = submission[0].attachments[0]
       this.submitted = !!this.link
     }
+    if (assignment.submissionDeadline <= new Date().toString) {
+      this.canReview = true
+    }
     this.assignment.submissionDeadline = new Date(this.assignment.submissionDeadline).toLocaleString(['en-US'], { month: 'short', day: '2-digit', year: 'numeric' })
     this.assignment.reviewDeadline = new Date(this.assignment.reviewDeadline).toLocaleString(['en-US'], { month: 'short', day: '2-digit', year: 'numeric' })
   },
   data: () => ({
+    canReview: false,
     updateDialog: false,
     submission: {},
     submitted: false,

@@ -34,9 +34,10 @@
                   <v-text-field
                     v-model="score"
                     outlined
+                    :placeholder="'out of  '+ totalPoints"
                     label="score"
                     type="text"
-                    :maxlength="2"
+                    :maxlength="5"
                     required
                     color="primary"
                     @keypress="isNumber($event)"
@@ -85,27 +86,52 @@ export default {
     const submission = await this.$axios.$get(`https://arcane-mountain-95630.herokuapp.com/submission/${this.$route.params.sub}`, header)
     this.link = submission.attachments[0]
     this.submission = submission
+    this.totalPoints = submission.assignment.totalPoints
   },
   data () {
     return {
       link: '',
+      totalPoints: null,
       submission: '',
       remark: '',
-      score: 0
+      score: ''
     }
   },
   methods: {
     isNumber (evt) {
-      evt = evt || window.event
-      const charCode = evt.which ? evt.which : evt.keyCode
-      if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      evt = (evt) || window.event
+      const charCode = (evt.which) ? evt.which : evt.keyCode
+      if ((charCode > 31 && (charCode < 48 || charCode > 57)) && charCode !== 46) {
         evt.preventDefault()
       } else {
         return true
       }
     },
     saveReview () {
-      return null
+      if (this.remark) {
+        if (this.score <= this.totalPoints && this.score !== '') {
+          this.$store.dispatch('reviewStore/createReview', {
+            token: this.$auth.getToken('local'),
+            data: {
+              course: this.$route.params.id,
+              assignment: this.$route.params.assg,
+              submission: this.$route.params.sub
+            }
+          })
+        } else {
+          this.$store.dispatch('authStore/snackbar', {
+            show: true,
+            color: 'red',
+            message: 'score should be a number and cannot more than total points'
+          })
+        }
+      } else {
+        this.$store.dispatch('authStore/snackbar', {
+          show: true,
+          color: 'red',
+          message: 'remark cannot be empty'
+        })
+      }
     }
   }
 }
