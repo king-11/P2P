@@ -52,16 +52,12 @@
                     <v-list>
                       <v-list-item>
                         <v-list-item-title>
-                          {{
-                            instructor.first_name
-                          }}
+                          {{ instructor.first_name }}
                         </v-list-item-title>
                       </v-list-item>
                       <v-list-item>
                         <v-list-item-title>
-                          {{
-                            instructor.email
-                          }}
+                          {{ instructor.email }}
                         </v-list-item-title>
                       </v-list-item>
                     </v-list>
@@ -117,38 +113,33 @@
         </div>
       </v-col>
     </v-row>
-    <v-container>
-      <div
-        v-for="(assg, i) in course.assignments"
-        :key="i"
-      >
-        <v-row style="margin-top: 4vh">
-          <v-col cols="12" lg="10" md="11" style="margin: auto; padding: 0">
-            <v-card :to="$route.fullPath+'/assignments/'+assg._id">
-              <v-row>
-                <v-col cols="1" class="hidden-xs-only">
-                  <v-img
-                    src="https://static.thenounproject.com/png/2038384-200.png"
-                    max-height="50"
-                    max-width="50"
-                    class="img"
-                  />
-                </v-col>
-                <v-col cols="11" class="hidden-xs-only">
-                  <v-card-title>{{ assg.title }}</v-card-title>
-                </v-col>
-                <v-col class="d-sm-none">
-                  <h4 style="margin-left: 17px">
-                    {{ assg.title }}
-                  </h4>
-                </v-col>
-              </v-row>
-            </v-card>
-          </v-col>
-        </v-row>
-      </div>
-    </v-container>
+    <v-row v-for="(assg, i) in course.assignments" :key="i" style="margin-top: 4vh">
+      <v-col cols="12" lg="10" md="11" style="margin: auto; padding: 0">
+        <v-card>
+          <v-row>
+            <v-col cols="1" class="hidden-xs-only">
+              <v-img
+                src="https://static.thenounproject.com/png/2038384-200.png"
+                max-height="50"
+                max-width="50"
+                class="img"
+              />
+            </v-col>
+            <v-col cols="11" class="hidden-xs-only">
+              <v-card-title>{{ assg.title }}</v-card-title>
+            </v-col>
+            <v-col class="d-sm-none">
+              <h4 style="margin-left: 17px">
+                {{ assg.title }}
+              </h4>
+            </v-col>
+          </v-row>
+        </v-card>
+      </v-col>
+    </v-row>
     <div v-if="false" class="text-xs-center mt-3 ml-10">
+      No assignments in this course yet !
+      No assignments in this course yet !
       No assignments in this course yet !
     </div>
     <v-speed-dial
@@ -162,13 +153,7 @@
       class="fab"
     >
       <template v-slot:activator>
-        <v-btn
-          v-model="fab"
-          color="blue darken-2"
-          dark
-          fab
-          large
-        >
+        <v-btn v-model="fab" color="blue darken-2" dark fab>
           <v-icon v-if="fab">
             mdi-close
           </v-icon>
@@ -182,7 +167,7 @@
         dark
         small
         color="green"
-        :to="'/courses/'+ this.$route.params.id + '/edit'"
+        :to="'/courses/' + this.$route.params.id + '/edit'"
       >
         <v-icon>mdi-pencil</v-icon>
       </v-btn>
@@ -191,17 +176,11 @@
         dark
         small
         color="indigo"
-        :to="'/courses/'+ this.$route.params.id + '/createassignment'"
+        :to="'/courses/' + this.$route.params.id + '/createassignment'"
       >
         <v-icon>mdi-plus</v-icon>
       </v-btn>
-      <v-btn
-        fab
-        dark
-        small
-        color="red"
-        @click="dialog"
-      >
+      <v-btn fab dark small color="red" @click="dialog">
         <v-icon>mdi-delete</v-icon>
       </v-btn>
     </v-speed-dial>
@@ -211,7 +190,8 @@
           Confirm
         </v-card-title>
         <v-card-text>
-          Are you sure to delete this course ?  All the assignments related to this course will also be deleted automatically .
+          Are you sure to delete this course ? All the assignments related to
+          this course will also be deleted automatically .
         </v-card-text>
         <v-card-actions>
           <v-btn color="red darken-1" text @click="deleteConfirm = false">
@@ -239,6 +219,7 @@ export default {
       `https://arcane-mountain-95630.herokuapp.com/teacher/course/${this.$route.params.id}`,
       header
     )
+    // console.log(course)
     this.course = course
     this.instructor = course.instructor
   },

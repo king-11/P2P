@@ -26,7 +26,7 @@
                     color="primary"
                     placeholder="Name of the course"
                     counter
-                    maxlength="20"
+                    maxlength="100"
                     :rules="[rules.minlength]"
                     required
                     :outlined="breakpoint"
