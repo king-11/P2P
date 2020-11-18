@@ -75,7 +75,6 @@ export const actions = {
           })
       })
   },
-  // assignment id to be sent
   deleteSubmission ({ commit }, payload) {
     const header = {
       headers: {
@@ -84,11 +83,11 @@ export const actions = {
     }
     axios.delete(`${BASE_URL}/submission/${payload.id}`, header)
       .then((data) => {
-        this.$router.push(`/courses/${payload.course}/assignments/${payload.data.assignment}`)
+        window.location.reload()
         commit('authStore/snackbar', {
           show: true,
           color: 'green',
-          message: 'Submission updated Succesfully !'
+          message: 'Submission deleted Succesfully !'
         }, { root: true })
       }).catch((err) => {
         commit('authStore/snackbar', {

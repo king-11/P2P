@@ -100,10 +100,11 @@
       </v-card-actions>
       <v-card-actions v-if="(!teacher)&submitted">
         <v-spacer />
-        <v-btn class="ma-2" color="white black--text" @click.stop="updateDialog = true">
+        <v-btn v-if="!canReview" class="ma-2" color="white black--text" @click.stop="updateDialog = true">
           Updated
         </v-btn>
         <v-btn
+          v-if="!canReview"
           color="white black--text"
           class="ma-2"
           @click="deleteSubmission"
@@ -215,11 +216,12 @@ export default {
         userSpecific: 'T'
       }
       const submission = await this.$axios.$get(`${url}/submission/`, header)
+      console.log(submission)
       this.submission = submission[0]
       this.link = submission[0].attachments[0]
       this.submitted = !!this.link
     }
-    if (assignment.submissionDeadline <= new Date().toString) {
+    if (assignment.submissionDeadline <= new Date().toISOString().substr(0, 10)) {
       this.canReview = true
     }
     this.assignment.submissionDeadline = new Date(this.assignment.submissionDeadline).toLocaleString(['en-US'], { month: 'short', day: '2-digit', year: 'numeric' })
@@ -296,9 +298,7 @@ export default {
         token: this.$auth.getToken('local'),
         course: this.$route.params.id,
         id: this.submission._id,
-        data: {
-          assignment: this.$route.params.assg
-        }
+        assignment: this.$route.params.assg
       })
     }
   }
