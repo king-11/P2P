@@ -123,7 +123,9 @@ export default {
             data: {
               course: this.$route.params.id,
               assignment: this.$route.params.assg,
-              submission: this.$route.params.sub
+              submission: this.$route.params.sub,
+              remark: this.remark,
+              score: this.score
             }
           })
         } else {

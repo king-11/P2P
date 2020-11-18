@@ -9,8 +9,9 @@ export const actions = {
         Authorization: payload.token
       }
     }
-    axios.put(`${BASE_URL}/user/courses/`, payload.data, header)
+    axios.put(`${BASE_URL}/user/course/`, payload.data, header)
       .then((data) => {
+        window.location.reload()
         commit('authStore/snackbar', {
           show: true,
           color: 'green',

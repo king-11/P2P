@@ -46,7 +46,7 @@
               {{ item.number_of_reviews }}
             </td>
             <td v-if="!teacher">
-              <v-btn class="ma-2" small color="white black--text" :to="'/courses/'+$route.params.id+'/assignments/'+$route.params.assg+'/review/'+item._id">
+              <v-btn class="ma-2" small color="white black--text" :to="'/courses/'+$route.params.id+'/assignments/'+$route.params.assg+'/review/'+item._id+'/create'">
                 Review
               </v-btn>
             </td>
@@ -73,12 +73,19 @@ export default {
         Authorization: this.$auth.getToken('local')
       }
     }
-
-    const submissions = await this.$axios.$get(
-      'https://arcane-mountain-95630.herokuapp.com/submission',
-      header
-    )
-    this.submissions = submissions
+    if (this.$auth.user.data.teacher) {
+      const submissions = await this.$axios.$get(
+        'https://arcane-mountain-95630.herokuapp.com/submission',
+        header
+      )
+      this.submissions = submissions
+    } else {
+      const submissions = await this.$axios.$get(
+        'https://arcane-mountain-95630.herokuapp.com/submission/get-in-phase',
+        header
+      )
+      this.submissions = submissions
+    }
   },
   data () {
     return {
@@ -91,7 +98,7 @@ export default {
       return this.submissions
     },
     teacher () {
-      return !this.$auth.user.data.teacher
+      return this.$auth.user.data.teacher
     }
   },
   method: {

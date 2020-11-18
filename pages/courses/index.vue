@@ -119,7 +119,9 @@
                 </v-chip>
               </v-card-title>
 
-              <v-card-subtitle>You're the Insructor</v-card-subtitle>
+              <v-card-subtitle v-if="isTeacher">
+                You're the Insructor
+              </v-card-subtitle>
             </nuxt-link>
             <v-card-actions>
               <div>ASSIGNMENTS</div>
@@ -156,15 +158,19 @@ export default {
     let url = 'https://arcane-mountain-95630.herokuapp.com/'
     if (this.$auth.user.data.teacher) {
       url += 'teacher/course/'
+      let courses = await this.$axios.$get(url)
+      courses = courses.map((e) => {
+        e.show = false
+        return e
+      })
+      this.courses = courses
     } else {
       url += 'user/course/'
+      const courses = await this.$axios.$get(url)
+      this.courses = courses.courses
     }
-    let courses = await this.$axios.$get(url)
-    courses = courses.map((e) => {
-      e.show = false
-      return e
-    })
-    this.courses = courses
+
+    // console.log(courses)
   },
   data () {
     return {
@@ -202,7 +208,7 @@ export default {
       const payload = {
         token: this.$auth.getToken('local'),
         data: {
-          code: this.code
+          classCode: this.code
         }
       }
       this.$store.dispatch('courseStore/joinCourse', payload)

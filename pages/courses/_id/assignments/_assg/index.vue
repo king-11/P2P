@@ -111,7 +111,7 @@
         >
           Delete
         </v-btn>
-        <v-btn v-if="canReview" class="ma-2" color="white black--text" :to="this.$route.fullPath + '/allSubmissions'">
+        <v-btn class="ma-2" color="white black--text" :to="this.$route.fullPath + '/allSubmissions'">
           Start Reviewing
         </v-btn>
       </v-card-actions>
@@ -209,16 +209,17 @@ export default {
         header
     )
     this.assignment = assignment
-    if (this.$auth.user.data.teacher) {
+    if (!this.$auth.user.data.teacher) {
       header.params = {
         courseId: this.$route.params.id,
         assignmentId: this.$route.params.assg,
         userSpecific: 'T'
       }
       const submission = await this.$axios.$get(`${url}/submission/`, header)
-      console.log(submission)
       this.submission = submission[0]
-      this.link = submission[0].attachments[0]
+      if (submission.length > 0) {
+        this.link = submission[0].attachments[0]
+      }
       this.submitted = !!this.link
     }
     if (assignment.submissionDeadline <= new Date().toISOString().substr(0, 10)) {
@@ -228,7 +229,7 @@ export default {
     this.assignment.reviewDeadline = new Date(this.assignment.reviewDeadline).toLocaleString(['en-US'], { month: 'short', day: '2-digit', year: 'numeric' })
   },
   data: () => ({
-    canReview: false,
+    canReview: true,
     updateDialog: false,
     submission: {},
     submitted: false,
@@ -240,7 +241,7 @@ export default {
   }),
   computed: {
     teacher () {
-      return !this.$auth.user.data.teacher
+      return this.$auth.user.data.teacher
     }
   },
   methods: {

@@ -35,7 +35,26 @@
 
 export default {
   middleware: ['auth'],
+  async fetch () {
+    const header = {
+      params: {
+        courseId: this.$route.params.id,
+        assignmentId: this.$route.params.assg,
+        userSpecific: 'F'
+      },
+      headers: {
+        Authorization: this.$auth.getToken('local')
+      }
+    }
+
+    const submissions = await this.$axios.$get(
+      'https://arcane-mountain-95630.herokuapp.com/submission/get-reviewed',
+      header
+    )
+    this.submissions = submissions.submissions
+  },
   data: () => ({
+    submissions: [],
     switch1: true,
     reviews: [
       {

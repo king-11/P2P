@@ -17,7 +17,7 @@ export const actions = {
     }
     axios.post(`${BASE_URL}/review/`, payload.data, header)
       .then((data) => {
-        this.$router.push(`/courses/'${payload.data.course}'/assignments/'${payload.data.assignment}/allSubmissions`)
+        this.$router.push(`/courses/${payload.data.course}/assignments/${payload.data.assignment}/allSubmissions`)
         commit('authStore/snackbar', {
           show: true,
           color: 'green',
