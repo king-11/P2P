@@ -231,7 +231,6 @@ export default {
       imageurl: null,
       firstName: '',
       lastName: '',
-      instructor: true,
       provider: null
     }
   },
@@ -250,7 +249,7 @@ export default {
       return name
     },
     role () {
-      return this.instructor ? 'Instructor' : 'Student'
+      return this.user.teacher ? 'Instructor' : 'Student'
     },
     joinedDate () {
       const date = new Date(this.user.createdAt)
