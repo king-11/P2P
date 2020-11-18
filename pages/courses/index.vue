@@ -43,9 +43,10 @@
               <v-card-title class="headline">
                 Enter Code
               </v-card-title>
+              <v-divider class="my-3" />
               <v-card-text>
                 <v-text-field
-                  v-model="title"
+                  v-model="code"
                   label="Code"
                   counter
                   maxlength="7"
@@ -56,9 +57,9 @@
               <v-card-actions>
                 <v-spacer />
                 <v-btn
-                  color="green darken-1"
+                  color="primary"
                   text
-                  @click="dialog = false"
+                  @click="joinCourse"
                 >
                   Join
                 </v-btn>
@@ -182,7 +183,9 @@ export default {
       isTeacher: this.$auth.user.data.teacher,
       rules: {
         minLength: value => !!value || 'Required!'
-      }
+      },
+      code: '',
+      dialog: false
     }
   },
   methods: {
@@ -194,6 +197,15 @@ export default {
         a.reviewDeadline = new Date(a.reviewDeadline).toLocaleString(['en-US'], { month: 'short', day: '2-digit', year: 'numeric' })
       })
       course.show = !course.show
+    },
+    joinCourse () {
+      const payload = {
+        token: this.$auth.getToken('local'),
+        data: {
+          code: this.code
+        }
+      }
+      this.$store.dispatch('courseStore/joinCourse', payload)
     }
   },
   head: {
